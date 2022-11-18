@@ -3,8 +3,6 @@ package martu;
 public class Tripulacion {
     private String codigo;
     private String origen;
-
-
     private Camino camino;
 
 

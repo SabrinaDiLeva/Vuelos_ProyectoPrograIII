@@ -3,7 +3,7 @@ package tda;
 public interface GrafoDirigidoTDA<E> {
     ConjuntoTDA<E> adyacentes(E vertice);
 
-    void agregarArista(E vertice1, E vertice2, int costo);
+    void agregarArista(E vertice1, E vertice2, //clase vuelos );
 
     void agregarVertice(E vertice);
 
@@ -17,7 +17,7 @@ public interface GrafoDirigidoTDA<E> {
 
     void inicializarGrafo();
 
-    int pesoArista(E vertice1, E vertice2);
+    int pesoArista(E vertice1, E vertice2);//
 
     ConjuntoTDA<E> vertices();
 
