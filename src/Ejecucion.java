@@ -1,38 +1,74 @@
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import tda.GrafoTDA;
-import tda.impl.Grafo;
+
+import martu.Vuelo;
+import tda.GrafoDirigidoTDA;
+import tda.impl.GrafoDirigido;
+import  martu.*;
 
 public class Ejecucion {
     public static void main(String[] args) {
-        List<Tripulacion> tripulaciones = new ArrayList<>();
+        ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
         List<Vuelo> vuelos = new ArrayList<>();
-        Vuelo vuelo1 = new Vuelo("V1", "Aeroparque","Mendoza",new Date(), new Date());
-        Vuelo vuelo5 = new Vuelo("V5", "Aeroparque","Usuahia",new Date(), new Date());
-        Vuelo vuelo2 = new Vuelo("V2", "Mendoza","Jujuy",new Date(), new Date());
-        Vuelo vuelo3 = new Vuelo("V3", "Jujuy","Calafate",new Date(), new Date());
-        Vuelo vuelo4 = new Vuelo("V4", "Calafate","Aeroparque",new Date(), new Date());
-        Vuelo vuelo6 = new Vuelo("V6", "Usuahia","Aeroparque",new Date(), new Date());
+
+
+
+        Object Aeroparque=new Object();
+        Object Mendoza=new Object();
+        Object  Jujuy=new Object();
+        Object Calafate=new Object();
+        Object Usuahia=new Object();
+
+        Vuelo vuelo1 = new Vuelo("V1", Aeroparque,Mendoza,new Date(), new Date());
+        Vuelo vuelo5 = new Vuelo("V5", Aeroparque,Calafate,new Date(), new Date());
+        Vuelo vuelo2 = new Vuelo("V2", Mendoza,Jujuy,new Date(), new Date());
+        Vuelo vuelo3 = new Vuelo("V3", Jujuy,Aeroparque,new Date(), new Date());
+        Vuelo vuelo4 = new Vuelo("V4", Calafate,Usuahia,new Date(), new Date());
+        Vuelo vuelo6 = new Vuelo("V6", Usuahia,Aeroparque,new Date(), new Date());
+        Vuelo vuelo7 = new Vuelo("V7", Calafate,Aeroparque,new Date(), new Date());
         vuelos.add(vuelo1);
         vuelos.add(vuelo5);
         vuelos.add(vuelo2);
         vuelos.add(vuelo3);
         vuelos.add(vuelo4);
         vuelos.add(vuelo6);
-        Tripulacion tripulacion1= new Tripulacion("T1","Aeroparque","Aeroparque");
-        Tripulacion tripulacion2= new Tripulacion("T2","Aeroparque","Aeroparque");
+        vuelos.add(vuelo7);
+
+
+        Tripulacion tripulacion1= new Tripulacion("T1",Aeroparque);
+        Tripulacion tripulacion2= new Tripulacion("T2",Aeroparque);
         tripulaciones.add(tripulacion1);
         tripulaciones.add(tripulacion2);
-        asignarVuelos(vuelos,tripulaciones);
+        //asignarVuelos(vuelos,tripulaciones);
+        GrafoDirigidoTDA mapa= new GrafoDirigido();
+        mapa.inicializarGrafo();
+        mapa.agregarVertice(Aeroparque);
+        mapa.agregarVertice(Mendoza);
+        mapa.agregarVertice(Jujuy);
+        mapa.agregarVertice(Calafate);
+        mapa.agregarVertice(Usuahia);
+        mapa.agregarArista(Aeroparque,Mendoza,vuelo1);
+        mapa.agregarArista(Aeroparque,Usuahia,vuelo2);
+        mapa.agregarArista(Mendoza,Jujuy,vuelo3);
+        mapa.agregarArista(Jujuy,Aeroparque,vuelo4);
+        mapa.agregarArista(Calafate, Usuahia,vuelo5);
+        mapa.agregarArista(Usuahia,Aeroparque,vuelo6);
+        mapa.agregarArista(Calafate,Aeroparque,vuelo7);
+        Main.AsignarPrimerVuelo(tripulaciones,mapa);
+        for (Tripulacion trip: tripulaciones){
+            for (Camino cam: trip.getCaminos()){
+                for (Object city: cam.getCaminoDeVuelos()){
+                    System.out.println(city);
+
+                }
+            }
+
+        }
+
     }
 
+    /*
     public static void archivoVuelos(){ //Metodos de lectura para archivo Vuelos
         try {
             File vuelos = new File("Vuelos.csv");
@@ -105,7 +141,8 @@ public class Ejecucion {
                 }
             }
         }*/
-        Vuelo v = vuelos.get(0);
+
+        /*Vuelo v = vuelos.get(0);
         //System.out.println("el vuelo"+v.getCodigo()+" tiene origen en "+v.getOrigen()+" y destino en "+v.getDestino());
         for(Tripulacion t: tripulaciones){
             //System.out.println("La tripulacion "+t.getCodigo()+" esta en "+t.getCiudadActual());
@@ -125,4 +162,8 @@ public class Ejecucion {
             }
         }
     }
+
+
+
+     */
 }

@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 public class Camino {
 
-    private ArrayList<String> caminoDeVuelos;
+    private ArrayList<Object> caminoDeVuelos;
 
     private  int costo;
 
 
     public Camino(){
-        ArrayList<String> caminoDeVuelos= new ArrayList<String>();
+        ArrayList<Object> caminoDeVuelos= new ArrayList<Object>();
         costo=0;
     }
 
-    public void Agregar(String ciudad){
+    public void Agregar(Object ciudad){
         caminoDeVuelos.add(ciudad);
     }
 
-    public ArrayList<String> getCaminoDeVuelos() {
+    public ArrayList<Object> getCaminoDeVuelos() {
         return caminoDeVuelos;
     }
 

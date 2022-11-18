@@ -1,16 +1,25 @@
 package martu;
 
+import java.util.ArrayList;
+
 public class Tripulacion {
     private String codigo;
-    private String origen;
+    private Object origen;
     private Camino camino;
 
+    public ArrayList<Camino> getCaminos() {
+        return caminos;
+    }
 
-    public Tripulacion(String codigo, String origen) {
+    private ArrayList<Camino> caminos;
+
+
+    public Tripulacion(String codigo, Object origen) {
         this.codigo = codigo;
         this.origen = origen;
         Camino cam=new Camino();
         cam.Agregar(origen);
+        ArrayList<Camino> caminos =new ArrayList<Camino>();
 
     }
 
@@ -22,7 +31,7 @@ public class Tripulacion {
         return codigo;
     }
 
-    public String getOrigen() {
+    public Object getOrigen() {
         return origen;
     }
 

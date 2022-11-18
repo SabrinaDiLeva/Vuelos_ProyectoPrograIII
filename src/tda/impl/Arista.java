@@ -1,14 +1,16 @@
 package tda.impl;
 
+import martu.Vuelo;
+
 public class Arista<E> implements Comparable<Arista<E>> {
     private E desde;
     private E hacia;
-    private int peso;
+    private Vuelo vuelo;
 
-    public Arista(E desde, E hacia, int peso) {
+    public Arista(E desde, E hacia,Vuelo vuelo) {
         this.desde = desde;
         this.hacia = hacia;
-        this.peso = peso;
+        this.vuelo = vuelo;
     }
 
     public E getDesde() {
@@ -19,12 +21,13 @@ public class Arista<E> implements Comparable<Arista<E>> {
         return hacia;
     }
 
-    public int getPeso() {
-        return peso;
+    public Vuelo getPeso() {
+        return vuelo;
     }
+
 
     @Override
     public int compareTo(Arista<E> o) {
-        return Integer.compare(o.getPeso(), this.peso);
+        return 0;
     }
 }

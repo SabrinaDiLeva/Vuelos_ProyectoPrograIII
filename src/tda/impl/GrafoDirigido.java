@@ -1,5 +1,6 @@
 package tda.impl;
 
+import martu.Vuelo;
 import tda.ConjuntoTDA;
 import tda.GrafoDirigidoTDA;
 
@@ -9,7 +10,7 @@ public class GrafoDirigido<E> implements GrafoDirigidoTDA<E> {
     private Map<Vertice<E>, List<Arista<E>>> grafo;
 
     @Override
-    public ConjuntoTDA<E> adyacentes(E vertice) {
+    public ConjuntoTDA<E> adyacentes(E vertice) {    ///MODIFICAR
         Vertice<E> v = new Vertice<>(vertice);
         ConjuntoTDA<E> adyacentes = new Conjunto<>();
         adyacentes.inicializarConjunto();
@@ -24,7 +25,7 @@ public class GrafoDirigido<E> implements GrafoDirigidoTDA<E> {
 
 
     @Override
-    public void agregarArista(E vertice1, E vertice2, int costo) {
+    public void agregarArista(E vertice1, E vertice2, Vuelo vuelo) {
         Vertice<E> v1 = new Vertice<>(vertice1);
         Vertice<E> v2 = new Vertice<>(vertice2);
         List<Arista<E>> aristas1 = this.grafo.get(v1);
@@ -36,7 +37,7 @@ public class GrafoDirigido<E> implements GrafoDirigidoTDA<E> {
         if (aristas2 == null) {
             this.agregarVertice(vertice2);
         }
-        aristas1.add(new Arista<>(vertice1, vertice2, costo));
+        aristas1.add(new Arista<>(vertice1, vertice2, vuelo));
     }
 
     @Override
@@ -83,17 +84,10 @@ public class GrafoDirigido<E> implements GrafoDirigidoTDA<E> {
     }
 
     @Override
-    public int pesoArista(E vertice1, E vertice2) {
-        Vertice<E> v = new Vertice<>(vertice1);
-        List<Arista<E>> aristas1 = this.grafo.get(v);
-        if (aristas1 != null) {
-            Optional<Arista<E>> arista = aristas1.stream().filter(a -> a.getDesde().equals(vertice1) && a.getHacia().equals(vertice2)).findFirst();
-            if (arista.isPresent()) {
-                return arista.get().getPeso();
-            }
-        }
+    public int pesoArista(E vertice1, E vertice2) { //MODIFICAR
         return 0;
     }
+
 
     @Override
     public ConjuntoTDA<E> vertices() {
