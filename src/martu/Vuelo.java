@@ -3,14 +3,14 @@ package martu;
 import java.util.Date;
 
 public class Vuelo {
-    private String codigo;
+    private int codigo;
     private Object origen;
     private Object destino;
     private Date fecha_despegue;
     private Date fecha_aterrizaje;
     private Tripulacion tripulacion;
 
-    public Vuelo(String codigo, Object origen, Object destino, Date fecha_despegue, Date fecha_aterrizaje) {
+    public Vuelo(int codigo, Object origen, Object destino, Date fecha_despegue, Date fecha_aterrizaje) {
         this.codigo = codigo;
         this.origen = origen;
         this.destino = destino;
@@ -19,7 +19,7 @@ public class Vuelo {
         this.tripulacion = null;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 

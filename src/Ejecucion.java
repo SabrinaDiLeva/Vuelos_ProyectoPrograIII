@@ -3,9 +3,9 @@ import java.util.Date;
 import java.util.List;
 
 import martu.Vuelo;
-import tda.GrafoDirigidoTDA;
-import tda.impl.GrafoDirigido;
+import tda.*;
 import  martu.*;
+import tda.impl.GrafoDirigido;
 
 public class Ejecucion {
     public static void main(String[] args) {
@@ -20,13 +20,13 @@ public class Ejecucion {
         Object Calafate=new Object();
         Object Usuahia=new Object();
 
-        Vuelo vuelo1 = new Vuelo("V1", Aeroparque,Mendoza,new Date(), new Date());
-        Vuelo vuelo5 = new Vuelo("V5", Aeroparque,Calafate,new Date(), new Date());
-        Vuelo vuelo2 = new Vuelo("V2", Mendoza,Jujuy,new Date(), new Date());
-        Vuelo vuelo3 = new Vuelo("V3", Jujuy,Aeroparque,new Date(), new Date());
-        Vuelo vuelo4 = new Vuelo("V4", Calafate,Usuahia,new Date(), new Date());
-        Vuelo vuelo6 = new Vuelo("V6", Usuahia,Aeroparque,new Date(), new Date());
-        Vuelo vuelo7 = new Vuelo("V7", Calafate,Aeroparque,new Date(), new Date());
+        Vuelo vuelo1 = new Vuelo(21, Aeroparque,Mendoza,new Date(), new Date());
+        Vuelo vuelo5 = new Vuelo(45, Aeroparque,Calafate,new Date(), new Date());
+        Vuelo vuelo2 = new Vuelo(26, Mendoza,Jujuy,new Date(), new Date());
+        Vuelo vuelo3 = new Vuelo(83, Jujuy,Aeroparque,new Date(), new Date());
+        Vuelo vuelo4 = new Vuelo(90, Calafate,Usuahia,new Date(), new Date());
+        Vuelo vuelo6 = new Vuelo(63, Usuahia,Aeroparque,new Date(), new Date());
+        Vuelo vuelo7 = new Vuelo(56, Calafate,Aeroparque,new Date(), new Date());
         vuelos.add(vuelo1);
         vuelos.add(vuelo5);
         vuelos.add(vuelo2);
@@ -41,7 +41,7 @@ public class Ejecucion {
         tripulaciones.add(tripulacion1);
         tripulaciones.add(tripulacion2);
         //asignarVuelos(vuelos,tripulaciones);
-        GrafoDirigidoTDA mapa= new GrafoDirigido();
+        GrafoDirigidoTDA mapa=new GrafoDirigido();
         mapa.inicializarGrafo();
         mapa.agregarVertice(Aeroparque);
         mapa.agregarVertice(Mendoza);

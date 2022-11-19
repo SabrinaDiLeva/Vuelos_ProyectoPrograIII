@@ -1,5 +1,7 @@
 package martu;
 
+import org.w3c.dom.Element;
+
 import java.util.ArrayList;
 
 public class Tripulacion {
@@ -20,6 +22,8 @@ public class Tripulacion {
         Camino cam=new Camino();
         cam.Agregar(origen);
         ArrayList<Camino> caminos =new ArrayList<Camino>();
+        this.caminos=caminos;
+        this.camino=cam;
 
     }
 

@@ -11,6 +11,7 @@ public class Camino {
 
     public Camino(){
         ArrayList<Object> caminoDeVuelos= new ArrayList<Object>();
+        this.caminoDeVuelos=caminoDeVuelos;
         costo=0;
     }
 
