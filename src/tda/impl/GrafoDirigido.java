@@ -13,13 +13,20 @@ public class GrafoDirigido<E> implements GrafoDirigidoTDA<E> {
     @Override
     public ConjuntoTDA<Vuelo> adyacentes(E vertice, LocalDateTime horas) { //MODIFICAE PARA
         LocalDateTime horasa=horas.plusHours(2);
+        System.out.println(horas.toString());
         Vertice<E> v = new Vertice<>(vertice);
         ConjuntoTDA<Vuelo> adyacentes = new Conjunto<>();
         adyacentes.inicializarConjunto();
         List<Arista<E>> aristas = this.grafo.get(v);
         for (Arista<E> arista : aristas) { //DEVUELVE ARISTAS POSITIVAS
+            System.out.println("dsag "+arista.getVuelo().getCodigo());
             if (arista.getVuelo().getFecha_despegue().isEqual(horasa) || arista.getVuelo().getFecha_despegue().isAfter(horasa)){ //si supera horas descanso o es mayor
+                    System.out.println("adyacente");
                     adyacentes.agregar(arista.getVuelo());
+
+
+
+
             }
         }
         return adyacentes;
