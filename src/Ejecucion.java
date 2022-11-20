@@ -57,7 +57,8 @@ public class Ejecucion {
         mapa.agregarArista(Calafate, Usuahia,vuelo4);
         mapa.agregarArista(Usuahia,Aeroparque,vuelo6);
         mapa.agregarArista(Calafate,Aeroparque,vuelo7);
-        Main.AsignarPrimerVuelo(tripulaciones,mapa);
+        System.out.println("gsgfsa");
+       Main.AsignarPrimerVuelo(tripulaciones,mapa);
 
     }
 }
