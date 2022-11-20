@@ -4,22 +4,28 @@ import clases.*;
 import tda.ConjuntoTDA;
 import tda.GrafoDirigidoTDA;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class GrafoDirigido<E> implements GrafoDirigidoTDA<E> {
     private Map<Vertice<E>, List<Arista<E>>> grafo;
 
     @Override
-    public ConjuntoTDA<E> adyacentes(E vertice) { //MODIFICAE PARA HIRAS
+    public ConjuntoTDA<Vuelo> adyacentes(E vertice, LocalDateTime horas) { //MODIFICAE PARA
+        horas=horas.plusHours(2);
+        System.out.println(horas.toString());
         Vertice<E> v = new Vertice<>(vertice);
-        ConjuntoTDA<E> adyacentes = new Conjunto<>();
+        ConjuntoTDA<Vuelo> adyacentes = new Conjunto<>();
         adyacentes.inicializarConjunto();
         List<Arista<E>> aristas = this.grafo.get(v);
-        for (Arista<E> arista : aristas) {
-            adyacentes.agregar(arista.getDesde());
-            adyacentes.agregar(arista.getHacia());
+        for (Arista<E> arista : aristas) { //DEVUELVE ARISTAS POSITIVAS
+            if (arista.getVuelo().getFecha_despegue().isEqual(horas) || arista.getVuelo().getFecha_despegue().isAfter(horas)){ //si supera horas descanso o es mayor
+                if (arista.getDesde()==vertice){ //arista pos
+                    adyacentes.agregar(arista.getVuelo());
+                }
+
+            }
         }
-        adyacentes.sacar(vertice);
         return adyacentes;
     }
 

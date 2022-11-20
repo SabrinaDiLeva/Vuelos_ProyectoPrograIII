@@ -1,16 +1,17 @@
 package clases;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Vuelo {
     private int codigo;
-    private String origen;
-    private String destino;
-    private Date fecha_despegue;
-    private Date fecha_aterrizaje;
+    private Object origen;
+    private Object destino;
+    private LocalDateTime fecha_despegue;
+    private LocalDateTime fecha_aterrizaje;
     private Tripulacion tripulacion;
 
-    public Vuelo(int codigo, String origen, String destino, Date fecha_despegue, Date fecha_aterrizaje) {
+    public Vuelo(int codigo,  Object origen, Object destino, LocalDateTime fecha_despegue, LocalDateTime fecha_aterrizaje) {
         this.codigo = codigo;
         this.origen = origen;
         this.destino = destino;
@@ -34,12 +35,12 @@ public class Vuelo {
     }
 
 
-    public Date getFecha_despegue() {
+    public LocalDateTime getFecha_despegue() {
         return fecha_despegue;
     }
 
 
-    public Date getFecha_aterrizaje() {
+    public LocalDateTime getFecha_aterrizaje() {
         return fecha_aterrizaje;
     }
 

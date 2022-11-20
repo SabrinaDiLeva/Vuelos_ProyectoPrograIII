@@ -18,7 +18,6 @@ public class Tripulacion {
         this.codigo = codigo;
         this.origen = origen;
         Camino cam=new Camino();
-        cam.Agregar(origen);
         ArrayList<Camino> caminos =new ArrayList<Camino>();
         this.caminos=caminos;
         this.camino=cam;

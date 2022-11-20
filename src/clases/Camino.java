@@ -4,22 +4,22 @@ import java.util.ArrayList;
 
 public class Camino {
 
-    private ArrayList<Object> caminoDeVuelos;
+    private ArrayList<Vuelo> caminoDeVuelos;
 
     private  int costo;
 
 
     public Camino(){
-        ArrayList<Object> caminoDeVuelos= new ArrayList<Object>();
+        ArrayList<Vuelo> caminoDeVuelos= new ArrayList<Vuelo>();
         this.caminoDeVuelos=caminoDeVuelos;
         costo=0;
     }
 
-    public void Agregar(Object ciudad){
+    public void Agregar(Vuelo ciudad){
         caminoDeVuelos.add(ciudad);
     }
 
-    public ArrayList<Object> getCaminoDeVuelos() {
+    public ArrayList<Vuelo> getCaminoDeVuelos() {
         return caminoDeVuelos;
     }
 

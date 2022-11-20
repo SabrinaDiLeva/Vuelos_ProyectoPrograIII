@@ -2,8 +2,10 @@ package tda;
 
 import clases.*;
 
+import java.time.LocalDateTime;
+
 public interface GrafoDirigidoTDA<E> {
-    ConjuntoTDA<E> adyacentes(E vertice);
+    ConjuntoTDA<Vuelo> adyacentes(E vertice, LocalDateTime hora);
 
     void agregarArista(E vertice1, E vertice2, Vuelo vuelo);
 

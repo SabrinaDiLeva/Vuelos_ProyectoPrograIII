@@ -1,36 +1,73 @@
 import clases.Camino;
 import clases.Tripulacion;
+import clases.Vuelo;
 import tda.*;
+import tda.impl.GrafoDirigido;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
 public class Main {
 
     public static void AsignarPrimerVuelo(ArrayList<Tripulacion> tripulaciones, GrafoDirigidoTDA mapa){ //los primeros vuelos son de los que va a salir cada tripulacicion
-        ConjuntoTDA conjunto= mapa.adyacentes(tripulaciones.get(0).getOrigen());
+        LocalDateTime horain=LocalDateTime.of(1999,12,12,12,12); //van a ser todos adyacentes
+        ConjuntoTDA<Vuelo> conjunto= mapa.adyacentes(tripulaciones.get(0).getOrigen(),horain); //vuelos q salen de origen
         for (Tripulacion trip: tripulaciones) {
-            Object aeropuerto = conjunto.elegir();
-            trip.getCamino().Agregar(aeropuerto);
-            conjunto.sacar(aeropuerto);
-            Camino caminosol=new Camino();
-            CaminosPosibles(trip,mapa,0, mapa.adyacentes(aeropuerto),caminosol );
+            Vuelo vueloasignar = conjunto.elegir();
+            System.out.println(vueloasignar.getDestino().toString()+ " d "+vueloasignar.getCodigo());
+            trip.getCamino().Agregar(vueloasignar);
+            for (int d=0;d<trip.getCamino().getCaminoDeVuelos().size();d++){
+                System.out.println(trip.getCamino().getCaminoDeVuelos().get(d).getDestino());
+            }
+            conjunto.sacar(vueloasignar);
+            LocalDateTime hora= vueloasignar.getFecha_aterrizaje(); //
+            ArrayList<Vuelo> solucionP= new ArrayList<Vuelo>();
+            solucionP.add(0,vueloasignar);
+            ConjuntoTDA<Vuelo> c=mapa.adyacentes(vueloasignar.getDestino(),hora); //no anda ady
+            System.out.println(c.conjuntoVacio());
+            while (!c.conjuntoVacio()){
+                Vuelo v=c.elegir();
+                System.out.println("ady"+ v.getCodigo());
+                c.sacar(v);
+            }
+
+            CaminosPosibles(trip,mapa,1,c,solucionP);
+            ArrayList<Camino> caminos= trip.getCaminos();
+            for (int i=0;i<caminos.size();i++){
+                ArrayList<Vuelo> camino=caminos.get(i).getCaminoDeVuelos();
+                for (int d=0;d<camino.size();d++){
+                    System.out.println(camino.get(d).getDestino());
+                }
+
+
+            }
+
+
         }
     }
 
-    public static void CaminosPosibles(Tripulacion tripulacion, GrafoDirigidoTDA mapa, int etapa,ConjuntoTDA ady,Camino solucion){
+    public static void CaminosPosibles(Tripulacion tripulacion, GrafoDirigidoTDA mapa, int etapa,ConjuntoTDA<Vuelo> ady,ArrayList<Vuelo> solucion){
+        System.out.println("ENTRE");
+        Vuelo vueloaux= ady.elegir();
+        System.out.println(vueloaux.getCodigo());
+
         for (int i = 0; i <= 1; i++) {
-            Object destino= ady.elegir();
             if (i==1){ //representa el si, cambia a los adyacentes del prox nodo
-                ConjuntoTDA adyacentes= mapa.adyacentes(destino);
+                solucion.add(etapa,vueloaux);
+                ConjuntoTDA adyacentes= mapa.adyacentes(vueloaux.getDestino(),vueloaux.getFecha_aterrizaje());
                 ady=adyacentes;
-                solucion.Agregar(destino);
             }else{ //representa el no, sigue con el resto de adyacentes
-                ady.sacar(destino);
+                ady.sacar(vueloaux);
             }
-            if (etapa==mapa.vertices().capacidad() || destino== tripulacion.getOrigen()){ //si paso x todos los vuelos o volvio al origen.
-                if (destino== tripulacion.getOrigen()){
-                    tripulacion.getCaminos().add(solucion); //usar array normal no camino.
+            if (etapa==mapa.vertices().capacidad() || vueloaux.getDestino()== tripulacion.getOrigen()){ //si paso x todos los vuelos o volvio al origen.
+                if (vueloaux.getDestino()== tripulacion.getOrigen()){
+                    Camino cam=new Camino();
+                    for (int d=0;d<solucion.size();d++){
+                        Vuelo x=solucion.get(d);
+                        cam.Agregar(x);
+                    }
+                    tripulacion.getCaminos().add(cam);
 
                 }
             }
@@ -42,9 +79,7 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
 
-    }
 
 
 
