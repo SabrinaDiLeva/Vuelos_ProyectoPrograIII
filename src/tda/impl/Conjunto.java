@@ -19,8 +19,10 @@ public class Conjunto<E> implements ConjuntoTDA<E> {
     }
 
     @Override
-    public E elegir() {
-        return this.conjunto.stream().skip(new Random().nextInt(this.conjunto.size())).findFirst().orElse(null);
+    public E elegir(int x) {
+        ArrayList<E> AR= new ArrayList<E>();
+        AR.addAll(this.conjunto);
+        return AR.get(x);
     }
 
     @Override

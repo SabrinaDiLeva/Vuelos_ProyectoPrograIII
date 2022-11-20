@@ -5,7 +5,7 @@ public interface ConjuntoTDA<E> {
 
     boolean conjuntoVacio();
 
-    E elegir();
+    E elegir(int x);
 
     void inicializarConjunto();
 
