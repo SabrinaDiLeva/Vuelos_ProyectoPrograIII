@@ -11,13 +11,12 @@ import java.util.ArrayList;
 
 public class Main {
 
+
     public static void AsignarPrimerVuelo(ArrayList<Tripulacion> tripulaciones, GrafoDirigidoTDA mapa){ //los primeros vuelos son de los que va a salir cada tripulacicion
         LocalDateTime horain=LocalDateTime.of(1999,12,12,12,12); //van a ser todos adyacentes
         ConjuntoTDA<Vuelo> conjunto= mapa.adyacentes(tripulaciones.get(0).getOrigen(),horain); //vuelos q salen de origen
-        int cont=0;
         for (Tripulacion trip: tripulaciones) {
             Vuelo vueloasignar = conjunto.elegir(0);
-            cont++;
             trip.getCamino().Agregar(vueloasignar);
             conjunto.sacar(vueloasignar);
             LocalDateTime hora= vueloasignar.getFecha_aterrizaje(); //
@@ -26,12 +25,11 @@ public class Main {
             ConjuntoTDA<Vuelo> c=mapa.adyacentes(vueloasignar.getDestino(),hora);
             int j=0;
             int costo=0;
-            CaminosPosibles(trip,mapa,1,c,solucionP, j);
+            CaminosPosibles(trip,mapa,1,c,solucionP, j,costo);
             ArrayList<Camino> caminos= trip.getCaminos();
             for (int i=0;i<caminos.size();i++){
                 ArrayList<Vuelo> camino=caminos.get(i).getCaminoDeVuelos();
                 System.out.println(caminos.size()+" "+camino.size() );
-
                 for (int d=0;d<camino.size();d++){
                     System.out.println(camino.get(d).getDestino() +" "+ camino.get(d).getCodigo());
                 }
@@ -49,8 +47,6 @@ public class Main {
             Vuelo vueloaux= ady.elegir(j);
             for (int i = 0; i <= 1; i++) {
                 if (i == 1) { //representa el si, cambia a los adyacentes del prox nodo
-                    solucion[etapa-1].getFecha_aterrizaje();//A
-                    solucion[etapa].getFecha_despegue();//B //comparar A Y B, Y QUE T DEVUELVA DIF DE HORA, X CADA HORA SON 60USD
                     solucion[etapa]=vueloaux;
                     ConjuntoTDA adyacentes = mapa.adyacentes(vueloaux.getDestino(), vueloaux.getFecha_aterrizaje());
                     ady = adyacentes;
@@ -80,11 +76,10 @@ public class Main {
 
     }
 
+    public static void CombinarCaminosTripulacion(ArrayList<Tripulacion> tripulaciones,int etapa,Camino combValida[]){
 
 
-
-
-
+    }
 
 
 }
