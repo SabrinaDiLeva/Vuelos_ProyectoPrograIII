@@ -30,7 +30,8 @@ public class Main {
             }
             if (etapa==mapa.vertices().capacidad() || destino== tripulacion.getOrigen()){ //si paso x todos los vuelos o volvio al origen.
                 if (destino== tripulacion.getOrigen()){
-                    tripulacion.getCaminos().add(solucion);
+                    tripulacion.getCaminos().add(solucion); //usar array normal no camino.
+
                 }
             }
             else {
