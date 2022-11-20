@@ -1,60 +1,65 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import clases.Vuelo;
+import tda.*;
+import clases.*;
+import tda.impl.GrafoDirigido;
+
 public class Ejecucion {
     public static void main(String[] args) {
-        List<Tripulacion> tripulaciones = new ArrayList<>();
+        ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
         List<Vuelo> vuelos = new ArrayList<>();
-        Vuelo vuelo1 = new Vuelo("V1", "Aeroparque","Mendoza",new Date(), new Date());
-        Vuelo vuelo5 = new Vuelo("V5", "Aeroparque","Usuahia",new Date(), new Date());
-        Vuelo vuelo2 = new Vuelo("V2", "Mendoza","Jujuy",new Date(), new Date());
-        Vuelo vuelo3 = new Vuelo("V3", "Jujuy","Calafate",new Date(), new Date());
-        Vuelo vuelo4 = new Vuelo("V4", "Calafate","Aeroparque",new Date(), new Date());
-        Vuelo vuelo6 = new Vuelo("V6", "Usuahia","Aeroparque",new Date(), new Date());
+
+        Object Aeroparque=new Object();
+        System.out.println(Aeroparque.toString());
+        Object Mendoza=new Object();
+        System.out.println(Mendoza.toString());
+        Object  Jujuy=new Object();
+        System.out.println(Jujuy.toString());
+        Object Calafate=new Object();
+        System.out.println(Calafate.toString());
+        Object Usuahia=new Object();
+        System.out.println(Usuahia.toString());
+
+        Vuelo vuelo1 = new Vuelo(21, Aeroparque,Mendoza, LocalDateTime.of(2023,12,19,12,30), LocalDateTime.of(2023,12,19,12,30));
+        Vuelo vuelo5 = new Vuelo(45, Aeroparque,Calafate,LocalDateTime.of(2023,12,19,12,30), LocalDateTime.of(2023,12,19,12,30));
+        Vuelo vuelo2 = new Vuelo(26, Mendoza,Jujuy,LocalDateTime.of(2024,12,19,12,30), LocalDateTime.of(2024,12,19,12,30));
+        Vuelo vuelo3 = new Vuelo(83, Jujuy,Aeroparque,LocalDateTime.of(2025,12,19,12,30), LocalDateTime.of(2025,12,19,12,30));
+        Vuelo vuelo4 = new Vuelo(90, Calafate,Usuahia,LocalDateTime.of(2024,12,19,12,30), LocalDateTime.of(2024,12,19,12,30));
+        Vuelo vuelo6 = new Vuelo(63, Usuahia,Aeroparque,LocalDateTime.of(2025,12,19,12,30), LocalDateTime.of(2025,12,19,12,30));
+        Vuelo vuelo7 = new Vuelo(56, Calafate,Aeroparque,LocalDateTime.of(2026,12,19,12,30), LocalDateTime.of(2026,12,19,12,30));
         vuelos.add(vuelo1);
         vuelos.add(vuelo5);
         vuelos.add(vuelo2);
         vuelos.add(vuelo3);
         vuelos.add(vuelo4);
         vuelos.add(vuelo6);
-        Tripulacion tripulacion1= new Tripulacion("T1","Aeroparque","Aeroparque");
-        Tripulacion tripulacion2= new Tripulacion("T2","Aeroparque","Aeroparque");
+        vuelos.add(vuelo7);
+
+        Tripulacion tripulacion1= new Tripulacion("T1",Aeroparque);
+        Tripulacion tripulacion2= new Tripulacion("T2",Aeroparque);
         tripulaciones.add(tripulacion1);
         tripulaciones.add(tripulacion2);
-        asignarVuelos(vuelos,tripulaciones);
-    }
-    public static void asignarVuelos(List<Vuelo>vuelos,List<Tripulacion>tripulaciones){
-        /*for(Vuelo v : vuelos){
-            for(Tripulacion t: tripulaciones){
-                //si estan en la misma ciudad y si da bien la hora
-                if(v.getOrigen()==t.getCiudadActual()){
-                    v.setTripulacion(t);
-                    t.setCiudadActual(v.getDestino());
-                    System.out.println("Se asigno la tripulacion "+t.getCodigo()+" al vuelo "+v.getCodigo());
-                    //vuelos.remove(v);
-                    //asignarVuelos(vuelos,tripulaciones);
-                    break;
-                }
-            }
-        }*/
-        Vuelo v = vuelos.get(0);
-        //System.out.println("el vuelo"+v.getCodigo()+" tiene origen en "+v.getOrigen()+" y destino en "+v.getDestino());
-        for(Tripulacion t: tripulaciones){
-            //System.out.println("La tripulacion "+t.getCodigo()+" esta en "+t.getCiudadActual());
-            //si estan en la misma ciudad y si da bien la hora
-            if(v.getOrigen()==t.getCiudadActual()){
-                v.setTripulacion(t);
-                t.setCiudadActual(v.getDestino());
-                System.out.println("Se asigno la tripulacion "+t.getCodigo()+" al vuelo "+v.getCodigo());
-                //System.out.println("la tripulacion "+ t.getCodigo()+" ahora esta en "+t.getCiudadActual());
-                if(vuelos.size()>1){
-                    vuelos.remove(v);
-                    asignarVuelos(vuelos,tripulaciones);
-                }else{
-                    System.out.println("Ha terminado la asignacion");
-                }
-                break;
-            }
-        }
+        GrafoDirigidoTDA mapa=new GrafoDirigido();
+        mapa.inicializarGrafo();
+        mapa.agregarVertice(Aeroparque);
+        mapa.agregarVertice(Mendoza);
+        mapa.agregarVertice(Jujuy);
+        mapa.agregarVertice(Calafate);
+        mapa.agregarVertice(Usuahia);
+        mapa.agregarArista(Aeroparque,Mendoza,vuelo1);
+        mapa.agregarArista(Aeroparque,Calafate,vuelo5);
+        mapa.agregarArista(Mendoza,Jujuy,vuelo2);
+        mapa.agregarArista(Jujuy,Aeroparque,vuelo3);
+        mapa.agregarArista(Calafate, Usuahia,vuelo4);
+        mapa.agregarArista(Usuahia,Aeroparque,vuelo6);
+        mapa.agregarArista(Calafate,Aeroparque,vuelo7);
+        System.out.println("gsgfsa");
+        Main.AsignarPrimerVuelo(tripulaciones,mapa);
+
     }
 }
+
