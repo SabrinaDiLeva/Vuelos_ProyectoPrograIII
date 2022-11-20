@@ -1,7 +1,7 @@
 package tda.impl;
 
 import tda.ConjuntoTDA;
-import tda.VectorTDA;
+
 
 import java.util.*;
 
@@ -43,14 +43,5 @@ public class Conjunto<E> implements ConjuntoTDA<E> {
         return this.conjunto.size();
     }
 
-    @Override
-    public VectorTDA<E> aVector() {
-        VectorTDA<E> vector = new Vector<>();
-        vector.inicializarVector(this.capacidad());
-        List<E> lista = new ArrayList<>(this.conjunto);
-        for (int i = 0; i < lista.size(); i++) {
-            vector.agregarElemento(i, lista.get(i));
-        }
-        return vector;
-    }
+
 }

@@ -15,5 +15,5 @@ public interface ConjuntoTDA<E> {
 
     int capacidad();
 
-    VectorTDA<E> aVector();
+
 }

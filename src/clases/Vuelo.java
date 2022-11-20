@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Vuelo {
     private int codigo;
-    private Object origen;
-    private Object destino;
+    private String origen;
+    private String destino;
     private Date fecha_despegue;
     private Date fecha_aterrizaje;
     private Tripulacion tripulacion;
 
-    public Vuelo(int codigo, Object origen, Object destino, Date fecha_despegue, Date fecha_aterrizaje) {
+    public Vuelo(int codigo, String origen, String destino, Date fecha_despegue, Date fecha_aterrizaje) {
         this.codigo = codigo;
         this.origen = origen;
         this.destino = destino;

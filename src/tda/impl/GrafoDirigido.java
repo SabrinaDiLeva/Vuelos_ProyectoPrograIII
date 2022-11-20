@@ -10,7 +10,7 @@ public class GrafoDirigido<E> implements GrafoDirigidoTDA<E> {
     private Map<Vertice<E>, List<Arista<E>>> grafo;
 
     @Override
-    public ConjuntoTDA<E> adyacentes(E vertice) {
+    public ConjuntoTDA<E> adyacentes(E vertice) { //MODIFICAE PARA HIRAS
         Vertice<E> v = new Vertice<>(vertice);
         ConjuntoTDA<E> adyacentes = new Conjunto<>();
         adyacentes.inicializarConjunto();
