@@ -25,6 +25,7 @@ public class Main {
             solucionP[0]=vueloasignar;
             ConjuntoTDA<Vuelo> c=mapa.adyacentes(vueloasignar.getDestino(),hora);
             int j=0;
+            int costo=0;
             CaminosPosibles(trip,mapa,1,c,solucionP, j);
             ArrayList<Camino> caminos= trip.getCaminos();
             for (int i=0;i<caminos.size();i++){
@@ -43,11 +44,13 @@ public class Main {
         }
     }
 
-    public static void CaminosPosibles(Tripulacion tripulacion, GrafoDirigidoTDA mapa, int etapa,ConjuntoTDA<Vuelo> ady,Vuelo solucion[],int j){ //AGREGAR COSTO!
+    public static void CaminosPosibles(Tripulacion tripulacion, GrafoDirigidoTDA mapa, int etapa,ConjuntoTDA<Vuelo> ady,Vuelo solucion[],int j,int costo){ //AGREGAR COSTO!
         if(j< ady.capacidad()){
             Vuelo vueloaux= ady.elegir(j);
             for (int i = 0; i <= 1; i++) {
                 if (i == 1) { //representa el si, cambia a los adyacentes del prox nodo
+                    solucion[etapa-1].getFecha_aterrizaje();//A
+                    solucion[etapa].getFecha_despegue();//B //comparar A Y B, Y QUE T DEVUELVA DIF DE HORA, X CADA HORA SON 60USD
                     solucion[etapa]=vueloaux;
                     ConjuntoTDA adyacentes = mapa.adyacentes(vueloaux.getDestino(), vueloaux.getFecha_aterrizaje());
                     ady = adyacentes;
@@ -66,7 +69,7 @@ public class Main {
 
                     }
                 } else {
-                    CaminosPosibles(tripulacion, mapa, etapa + 1, ady, solucion,j+1);
+                    CaminosPosibles(tripulacion, mapa, etapa + 1, ady, solucion,j+1,costo);
                 }
 
 
