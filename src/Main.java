@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,11 +47,14 @@ public class Main {
             System.out.println("PROX TRIP");
         }
         Camino combValida[] = new Camino[tripulaciones.size()];
-        CombinarCaminosTripulacion(tripulaciones, 0, combValida);
+        int costo=0;
+        int costoParcial=0;
+        CombinarCaminosTripulacion(tripulaciones, 0, combValida,costo,costoParcial);
         System.out.println("SOLUCION");
         for(Camino camino : combValida){
+            System.out.println("Camino: ");
             for(Vuelo vuelo : camino.getCaminoDeVuelos()){
-                System.out.println(vuelo.getCodigo());
+                System.out.println("Vuelo " +vuelo.getCodigo());
             }
         }
     }
@@ -78,6 +82,7 @@ public class Main {
                                 cam.Agregar(x);
                         }
                         tripulacion.getCaminos().add(cam);
+                        cam.setCosto(costo);
 
                     }
                 } else {
@@ -92,41 +97,20 @@ public class Main {
 
     }
 
-    public static boolean CombinarCaminosTripulacion(ArrayList<Tripulacion> tripulaciones,int etapa,Camino combValida[]){
+    public static boolean CombinarCaminosTripulacion(ArrayList<Tripulacion> tripulaciones,int etapa,Camino combValida[],int costo, int costoParcial){
         boolean solucion = false;
 
-        /*ArrayList<Camino> caminosDeLaPrimera= tripulaciones.get(0).getCaminos();
-        for(Camino camino : caminosDeLaPrimera){
-            combValida[etapa]=camino;
-            while(etapa<tripulaciones.size() && !solucion){
-                Camino camino2 = tripulaciones.get(etapa+1).getCaminos().get(0);
-                combValida[etapa+1]=camino;
-    
-                if(combinacionValida(combValida,etapa)){
-                    if (etapa==tripulaciones.size()-1){
-                        solucion=true;
-                    }else{
-                        solucion = CombinarCaminosTripulacion(tripulaciones, etapa+1, combValida);
-                    }
-                }
-            }
-            return solucion;
-        }
-        return*/
         int j=0;
         while(!solucion && j<tripulaciones.get(etapa).getCaminos().size()){
             combValida[etapa]= tripulaciones.get(etapa).getCaminos().get(j);
-            
-            for(Camino camino : combValida){
-                System.out.println("hay un camino");
-                //System.out.println(camino.getCaminoDeVuelos().size());
-            }
+            costoParcial+=tripulaciones.get(etapa).getCaminos().get(j).getCosto();
 
-            if(combinacionValida(combValida,etapa)){
+            if(combinacionValida(combValida,etapa,costo,costoParcial)){
                 if (etapa==tripulaciones.size()-1){
                     solucion=true;
+                    costo=costoParcial;
                 }else{
-                    solucion = CombinarCaminosTripulacion(tripulaciones, etapa+1, combValida);
+                    solucion = CombinarCaminosTripulacion(tripulaciones, etapa+1, combValida,costo, costoParcial);
                 }
             }
         }
@@ -134,19 +118,23 @@ public class Main {
 
     }
 
-    public static boolean combinacionValida(Camino comb[],int etapa){
+    public static boolean combinacionValida(Camino comb[],int etapa,int costo, int costoParcial){
         System.out.println("entre");
-        ConjuntoTDA<Vuelo> vuelosUsados = new Conjunto<Vuelo>();
-        vuelosUsados.inicializarConjunto();
+        if(costoParcial<costo){
+            ConjuntoTDA<Vuelo> vuelosUsados = new Conjunto<Vuelo>();
+            vuelosUsados.inicializarConjunto();
 
-        for(int i=0; i<etapa; i++){
-            for(Vuelo vuelo: comb[i].getCaminoDeVuelos()){
-                if(vuelosUsados.pertenece(vuelo)){
-                    return false;
-                }else{
-                    vuelosUsados.agregar(vuelo);
+            for(int i=0; i<etapa; i++){
+                for(Vuelo vuelo: comb[i].getCaminoDeVuelos()){
+                    if(vuelosUsados.pertenece(vuelo)){
+                        return false;
+                    }else{
+                        vuelosUsados.agregar(vuelo);
+                    }
                 }
             }
+        }else{
+            return false;
         }
 
         return true;
@@ -157,6 +145,10 @@ public class Main {
         /*Duration diferencia = Duration.between(solucion[etapa].getFecha_aterrizaje(), solucion[ultimaEtapa].getFecha_despegue());
         System.out.print("diferencia" +diferencia);*/
         
+        long horas = ChronoUnit.HOURS.between(vuelo1.getFecha_aterrizaje(), vuelo2.getFecha_despegue());
+        System.out.println("horas entre vuelos: "+horas);
+        costo=(int) ((horas-2)*100);
+        System.out.println("costo entre vuelos: "+costo);
         return costo;
     }
 
