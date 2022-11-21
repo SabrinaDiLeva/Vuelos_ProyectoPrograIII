@@ -42,11 +42,16 @@ public class Main {
                     System.out.println("Codigo de vuelo: "+ camino.get(d).getCodigo());
                 }
 
-
             }
             System.out.println("PROX TRIP");
-
-
+        }
+        Camino combValida[] = new Camino[tripulaciones.size()];
+        CombinarCaminosTripulacion(tripulaciones, 0, combValida);
+        System.out.println("SOLUCION");
+        for(Camino camino : combValida){
+            for(Vuelo vuelo : camino.getCaminoDeVuelos()){
+                System.out.println(vuelo.getCodigo());
+            }
         }
     }
 
@@ -90,13 +95,32 @@ public class Main {
     public static boolean CombinarCaminosTripulacion(ArrayList<Tripulacion> tripulaciones,int etapa,Camino combValida[]){
         boolean solucion = false;
 
-        Camino camino = tripulaciones.get(etapa).getCaminos().get(0);
-        combValida[etapa]=camino;
-        
-        //while comb valida .size < cant tripulaciones
-        while(etapa<tripulaciones.size() && !solucion){
-            Camino camino2 = tripulaciones.get(etapa+1).getCaminos().get(0);
-            combValida[etapa+1]=camino;
+        /*ArrayList<Camino> caminosDeLaPrimera= tripulaciones.get(0).getCaminos();
+        for(Camino camino : caminosDeLaPrimera){
+            combValida[etapa]=camino;
+            while(etapa<tripulaciones.size() && !solucion){
+                Camino camino2 = tripulaciones.get(etapa+1).getCaminos().get(0);
+                combValida[etapa+1]=camino;
+    
+                if(combinacionValida(combValida,etapa)){
+                    if (etapa==tripulaciones.size()-1){
+                        solucion=true;
+                    }else{
+                        solucion = CombinarCaminosTripulacion(tripulaciones, etapa+1, combValida);
+                    }
+                }
+            }
+            return solucion;
+        }
+        return*/
+        int j=0;
+        while(!solucion && j<tripulaciones.get(etapa).getCaminos().size()){
+            combValida[etapa]= tripulaciones.get(etapa).getCaminos().get(j);
+            
+            for(Camino camino : combValida){
+                System.out.println("hay un camino");
+                //System.out.println(camino.getCaminoDeVuelos().size());
+            }
 
             if(combinacionValida(combValida,etapa)){
                 if (etapa==tripulaciones.size()-1){
@@ -107,13 +131,16 @@ public class Main {
             }
         }
         return solucion;
+
     }
 
     public static boolean combinacionValida(Camino comb[],int etapa){
-        ConjuntoTDA vuelosUsados = new Conjunto<Vuelo>();
+        System.out.println("entre");
+        ConjuntoTDA<Vuelo> vuelosUsados = new Conjunto<Vuelo>();
+        vuelosUsados.inicializarConjunto();
 
-        for(Camino camino: comb){
-            for(Vuelo vuelo : camino.getCaminoDeVuelos()){
+        for(int i=0; i<etapa; i++){
+            for(Vuelo vuelo: comb[i].getCaminoDeVuelos()){
                 if(vuelosUsados.pertenece(vuelo)){
                     return false;
                 }else{
