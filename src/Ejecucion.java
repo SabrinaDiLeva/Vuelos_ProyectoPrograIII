@@ -15,7 +15,7 @@ public class Ejecucion {
     public static ArrayList<Tripulacion> cargarTripulaciones() {
         ArrayList<Tripulacion> tripulacionesA = new ArrayList<>();
         try {
-            File tripulaciones = new File("Tripulaciones.csv");
+            File tripulaciones = new File("/Users/martutoffoletto/Documents/GitHub/Vuelos_ProyectoPrograIII/src/Tripulaciones.csv");
             Scanner trip = new Scanner(tripulaciones);
             while (trip.hasNextLine()) {
                 String data = trip.nextLine();
@@ -37,7 +37,7 @@ public class Ejecucion {
         ConjuntoTDA<String> conjt= new Conjunto<String>();
         conjt.inicializarConjunto();
         try {
-            File aeropuertos = new File("Aeropuertos.csv");
+            File aeropuertos = new File("/Users/martutoffoletto/Documents/GitHub/Vuelos_ProyectoPrograIII/src/Aeropuertos.csv");
             Scanner trip = new Scanner(aeropuertos);
             while (trip.hasNextLine()) {
                 String data = trip.nextLine();
@@ -57,7 +57,7 @@ public class Ejecucion {
             conjt.sacar(aero);
         }
         try {
-            File vuelos = new File("Vuelo.csv");
+            File vuelos = new File("/Users/martutoffoletto/Documents/GitHub/Vuelos_ProyectoPrograIII/src/Vuelo.csv");
             Scanner trip = new Scanner(vuelos);
             while (trip.hasNextLine()) {
                 String data = trip.nextLine();
@@ -70,14 +70,24 @@ public class Ejecucion {
             }
             trip.close();
         } catch (Exception e) {
-            System.out.println("Error inesperado.");
+            System.out.println("Error inesperado BRUH");
             e.printStackTrace();
         }
         return mapa;
     }
+
     public static void main(String[] args) {
         ArrayList<Tripulacion> tripulaciones= cargarTripulaciones();
+        for(Tripulacion trip:tripulaciones){
+            System.out.println(trip.getCodigo());
+        }
         GrafoDirigidoTDA mapa= cargarGrafo();
+        ConjuntoTDA c=mapa.vertices();
+        while (!c.conjuntoVacio()){
+            System.out.println(c.elegir(0));
+            c.sacar(c.elegir(0));
+        }
+
         Main.AsignarPrimerVuelo(tripulaciones,mapa);
 
     }
