@@ -1,65 +1,84 @@
+import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Scanner;
 import clases.Vuelo;
 import tda.*;
 import clases.*;
+import tda.impl.Conjunto;
 import tda.impl.GrafoDirigido;
 
 public class Ejecucion {
-    public static void main(String[] args) {
-        ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
-        List<Vuelo> vuelos = new ArrayList<>();
-
-        Object Aeroparque=new Object();
-        //System.out.println(Aeroparque.toString());
-        Object Mendoza=new Object();
-        //System.out.println(Mendoza.toString());
-        Object  Jujuy=new Object();
-        //System.out.println(Jujuy.toString());
-        Object Calafate=new Object();
-        //System.out.println(Calafate.toString());
-        Object Usuahia=new Object();
-        //System.out.println(Usuahia.toString());
-
-        Vuelo vuelo1 = new Vuelo(21, Aeroparque,Mendoza, LocalDateTime.of(2023,12,19,12,30), LocalDateTime.of(2023,12,19,12,30));
-        Vuelo vuelo5 = new Vuelo(45, Aeroparque,Calafate,LocalDateTime.of(2023,12,19,12,30), LocalDateTime.of(2023,12,19,13,30));
-        Vuelo vuelo2 = new Vuelo(26, Mendoza,Jujuy,LocalDateTime.of(2024,12,19,12,30), LocalDateTime.of(2024,12,19,12,30));
-        Vuelo vuelo3 = new Vuelo(83, Jujuy,Aeroparque,LocalDateTime.of(2025,12,19,12,30), LocalDateTime.of(2025,12,19,12,30));
-        Vuelo vuelo4 = new Vuelo(90, Calafate,Usuahia,LocalDateTime.of(2024,12,19,12,30), LocalDateTime.of(2024,12,19,12,30));
-        Vuelo vuelo6 = new Vuelo(63, Usuahia,Aeroparque,LocalDateTime.of(2025,12,19,12,30), LocalDateTime.of(2025,12,19,12,30));
-        Vuelo vuelo7 = new Vuelo(56, Calafate,Aeroparque,LocalDateTime.of(2023,12,19,17,30), LocalDateTime.of(2023,12,19,22,30));
-        
-        vuelos.add(vuelo1);
-        vuelos.add(vuelo5);
-        vuelos.add(vuelo2);
-        vuelos.add(vuelo3);
-        vuelos.add(vuelo4);
-        vuelos.add(vuelo6);
-        vuelos.add(vuelo7);
-
-        Tripulacion tripulacion1= new Tripulacion("T1",Aeroparque);
-        Tripulacion tripulacion2= new Tripulacion("T2",Aeroparque);
-        tripulaciones.add(tripulacion1);
-        tripulaciones.add(tripulacion2);
-        GrafoDirigidoTDA mapa=new GrafoDirigido();
+    public static ArrayList<Tripulacion> cargarTripulaciones() {
+        ArrayList<Tripulacion> tripulacionesA = new ArrayList<>();
+        try {
+            File tripulaciones = new File("Tripulaciones.csv");
+            Scanner trip = new Scanner(tripulaciones);
+            while (trip.hasNextLine()) {
+                String data = trip.nextLine();
+                String[] datos = null;
+                datos = data.split(",");
+                Tripulacion tripulacion = new Tripulacion(datos[0], datos[1]);
+                tripulacionesA.add(tripulacion);
+            }
+            trip.close();
+        } catch (Exception e) {
+            System.out.println("Error inesperado.");
+            e.printStackTrace();
+        }
+        return tripulacionesA;
+    }
+    public static GrafoDirigidoTDA<Object>  cargarGrafo() {
+        GrafoDirigidoTDA<Object> mapa= new GrafoDirigido<Object>();
         mapa.inicializarGrafo();
-        mapa.agregarVertice(Aeroparque);
-        mapa.agregarVertice(Mendoza);
-        mapa.agregarVertice(Jujuy);
-        mapa.agregarVertice(Calafate);
-        mapa.agregarVertice(Usuahia);
-        mapa.agregarArista(Aeroparque,Mendoza,vuelo1);
-        mapa.agregarArista(Aeroparque,Calafate,vuelo5);
-        mapa.agregarArista(Mendoza,Jujuy,vuelo2);
-        mapa.agregarArista(Jujuy,Aeroparque,vuelo3);
-        mapa.agregarArista(Calafate, Usuahia,vuelo4);
-        mapa.agregarArista(Usuahia,Aeroparque,vuelo6);
-        mapa.agregarArista(Calafate,Aeroparque,vuelo7);
-        //System.out.println("gsgfsa");
-       Main.AsignarPrimerVuelo(tripulaciones,mapa);
+        ConjuntoTDA<String> conjt= new Conjunto<String>();
+        conjt.inicializarConjunto();
+        try {
+            File aeropuertos = new File("Aeropuertos.csv");
+            Scanner trip = new Scanner(aeropuertos);
+            while (trip.hasNextLine()) {
+                String data = trip.nextLine();
+                String[] datos = null;
+                datos = data.split(",");
+                conjt.agregar(datos[0]);
+                conjt.agregar(datos[1]);
+            }
+            trip.close();
+        } catch (Exception e) {
+            System.out.println("Error inesperado.");
+            e.printStackTrace();
+        }
+        while(!conjt.conjuntoVacio()){
+            String aero=conjt.elegir(0);
+            mapa.agregarVertice(aero);
+            conjt.sacar(aero);
+        }
+        try {
+            File vuelos = new File("Vuelo.csv");
+            Scanner trip = new Scanner(vuelos);
+            while (trip.hasNextLine()) {
+                String data = trip.nextLine();
+                String[] datos = null;
+                datos = data.split(",");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                String[] cod=datos[0].split(" ");
+                Vuelo vuel= new Vuelo(Integer.valueOf(cod[1]),datos[1],datos[2],LocalDateTime.parse(datos[3], formatter),LocalDateTime.parse(datos[4], formatter));
+                mapa.agregarArista(datos[1],datos[2],vuel);
+            }
+            trip.close();
+        } catch (Exception e) {
+            System.out.println("Error inesperado.");
+            e.printStackTrace();
+        }
+        return mapa;
+    }
+    public static void main(String[] args) {
+        ArrayList<Tripulacion> tripulaciones= cargarTripulaciones();
+        GrafoDirigidoTDA mapa= cargarGrafo();
+        Main.AsignarPrimerVuelo(tripulaciones,mapa);
 
     }
 }

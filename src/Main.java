@@ -119,7 +119,6 @@ public class Main {
     }
 
     public static boolean combinacionValida(Camino comb[],int etapa,int costo, int costoParcial){
-        System.out.println("entre");
         if(costoParcial<costo){
             ConjuntoTDA<Vuelo> vuelosUsados = new Conjunto<Vuelo>();
             vuelosUsados.inicializarConjunto();
@@ -142,13 +141,14 @@ public class Main {
 
     public static int costoEntreDosVuelos(Vuelo vuelo1, Vuelo vuelo2){
         int costo=0;
-        /*Duration diferencia = Duration.between(solucion[etapa].getFecha_aterrizaje(), solucion[ultimaEtapa].getFecha_despegue());
-        System.out.print("diferencia" +diferencia);*/
-        
-        long horas = ChronoUnit.HOURS.between(vuelo1.getFecha_aterrizaje(), vuelo2.getFecha_despegue());
-        System.out.println("horas entre vuelos: "+horas);
-        costo=(int) ((horas-2)*100);
-        System.out.println("costo entre vuelos: "+costo);
+        System.out.println(vuelo1.getCodigo()+" "+vuelo2.getCodigo());
+        long horas = ChronoUnit.HOURS.between(vuelo2.getFecha_aterrizaje(),vuelo1.getFecha_despegue());
+        if(horas>2){
+            System.out.println("horas entre vuelos: "+horas);
+            costo=(int) ((horas-2)*100);
+            System.out.println("costo entre vuelos: "+costo);
+        }
+
         return costo;
     }
 
