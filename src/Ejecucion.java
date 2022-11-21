@@ -14,15 +14,15 @@ public class Ejecucion {
         List<Vuelo> vuelos = new ArrayList<>();
 
         Object Aeroparque=new Object();
-        System.out.println(Aeroparque.toString());
+        //System.out.println(Aeroparque.toString());
         Object Mendoza=new Object();
-        System.out.println(Mendoza.toString());
+        //System.out.println(Mendoza.toString());
         Object  Jujuy=new Object();
-        System.out.println(Jujuy.toString());
+        //System.out.println(Jujuy.toString());
         Object Calafate=new Object();
-        System.out.println(Calafate.toString());
+        //System.out.println(Calafate.toString());
         Object Usuahia=new Object();
-        System.out.println(Usuahia.toString());
+        //System.out.println(Usuahia.toString());
 
         Vuelo vuelo1 = new Vuelo(21, Aeroparque,Mendoza, LocalDateTime.of(2023,12,19,12,30), LocalDateTime.of(2023,12,19,12,30));
         Vuelo vuelo5 = new Vuelo(45, Aeroparque,Calafate,LocalDateTime.of(2023,12,19,12,30), LocalDateTime.of(2023,12,19,12,30));
@@ -57,7 +57,7 @@ public class Ejecucion {
         mapa.agregarArista(Calafate, Usuahia,vuelo4);
         mapa.agregarArista(Usuahia,Aeroparque,vuelo6);
         mapa.agregarArista(Calafate,Aeroparque,vuelo7);
-        System.out.println("gsgfsa");
+        //System.out.println("gsgfsa");
        Main.AsignarPrimerVuelo(tripulaciones,mapa);
 
     }
