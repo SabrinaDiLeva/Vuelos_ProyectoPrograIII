@@ -15,7 +15,7 @@ public class Ejecucion {
     public static ArrayList<Tripulacion> cargarTripulaciones() {
         ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
         try {
-            Scanner trip = new Scanner(new File("C:\\Users\\User\\Downloads\\Tripulaciones.csv"));
+            Scanner trip = new Scanner(new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Tripulaciones.csv"));
             boolean a=true;
             while (trip.hasNextLine()) {
                 if(a){
@@ -43,7 +43,7 @@ public class Ejecucion {
         ConjuntoTDA<String> conjt= new Conjunto<String>();
         conjt.inicializarConjunto();
         try {
-            File aeropuertos = new File("C:\\Users\\User\\Downloads\\Aeropuertos.csv");
+            File aeropuertos = new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Aeropuertos.csv");
             Scanner trip = new Scanner(aeropuertos);
             boolean a=true;
             while (trip.hasNextLine()) {
@@ -70,7 +70,7 @@ public class Ejecucion {
             conjt.sacar(aero);
         }
         try {
-            File archivoVuelos = new File("C:\\Users\\User\\Downloads\\Vuelos.csv");
+            File archivoVuelos = new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Vuelossss.csv");
             Scanner trip = new Scanner(archivoVuelos);
             boolean a=true;
 
