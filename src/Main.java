@@ -23,7 +23,7 @@ public class Main {
         LocalDateTime horain=LocalDateTime.of(1999,12,12,12,12); //van a ser todos adyacentes
         ConjuntoTDA<Vuelo> conjunto= mapa.adyacentes(tripulaciones.get(0).getOrigen(),horain); //vuelos q salen de origen
         for (Tripulacion trip: tripulaciones) {
-            System.out.println("TRIPULACION: "+trip.getCodigo());
+            //System.out.println("TRIPULACION: "+trip.getCodigo());
             Vuelo vueloasignar = conjunto.elegir(0);
             conjunto.sacar(vueloasignar);
             LocalDateTime hora= vueloasignar.getFecha_aterrizaje(); //hora de aterrizaje del primer vuelo asignado
@@ -33,12 +33,12 @@ public class Main {
             CaminosPosibles(trip,mapa,1,c,solucionP, 0,0,0,cantvuelos);
             ArrayList<Camino> caminos= trip.getCaminos();
             for (int i=0;i<caminos.size();i++){
-                System.out.println("CAMINO:"+caminos.get(i).getCosto() );
+//                System.out.println("CAMINO:"+caminos.get(i).getCosto() );
 
                 ArrayList<Vuelo> camino=caminos.get(i).getCaminoDeVuelos();
-                for (int d=0;d<camino.size();d++){
-                    System.out.println("Codigo de vuelo: "+ camino.get(d).getCodigo());
-                }
+//                for (int d=0;d<camino.size();d++){
+//                    System.out.println("Codigo de vuelo: "+ camino.get(d).getCodigo());
+//                }
             }
 
         }
