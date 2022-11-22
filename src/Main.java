@@ -71,7 +71,7 @@ public class Main {
                 else {
                     solucion[etapa]=null;
                 }
-                if (i==1  && (etapa<cantvuelos || vueloaux.getDestino().equals(tripulacion.getOrigen()) )) {
+                if (i==1  && (etapa>=cantvuelos || vueloaux.getDestino().equals(tripulacion.getOrigen()) )) {
                     if (vueloaux.getDestino().equals(tripulacion.getOrigen())) {
                         Camino cam = new Camino();
                         int d=0;

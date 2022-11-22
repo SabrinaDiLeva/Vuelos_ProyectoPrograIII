@@ -153,7 +153,7 @@ public class Ejecucion {
         //ArrayList<Tripulacion> tripulaciones= cargarTripulaciones();
 //      GrafoDirigidoTDA mapa= cargarGrafo(cantvuelos);
 
-        int cantvuelos=0;
+        int cantvuelos=6;
         Main.AsignarPrimerVuelo(tripulaciones,mapa,cantvuelos);
 
 
