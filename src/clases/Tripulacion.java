@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Tripulacion {
     private String codigo;
     private Object origen;
-    private Camino camino;
+
 
     public ArrayList<Camino> getCaminos() {
         return caminos;
@@ -20,13 +20,11 @@ public class Tripulacion {
         Camino cam=new Camino();
         ArrayList<Camino> caminos =new ArrayList<Camino>();
         this.caminos=caminos;
-        this.camino=cam;
+
 
     }
 
-    public Camino getCamino() {
-        return camino;
-    }
+
 
     public String getCodigo() {
         return codigo;
