@@ -9,7 +9,7 @@ public class Vuelo {
     private Object destino;
     private LocalDateTime fecha_despegue;
     private LocalDateTime fecha_aterrizaje;
-    private Tripulacion tripulacion;
+
 
     public Vuelo(int codigo,  Object origen, Object destino, LocalDateTime fecha_despegue, LocalDateTime fecha_aterrizaje) {
         this.codigo = codigo;
@@ -17,7 +17,6 @@ public class Vuelo {
         this.destino = destino;
         this.fecha_despegue = fecha_despegue;
         this.fecha_aterrizaje = fecha_aterrizaje;
-        this.tripulacion = null;
     }
 
     public int getCodigo() {
@@ -44,8 +43,6 @@ public class Vuelo {
         return fecha_aterrizaje;
     }
 
-    public Tripulacion getTripulacion() {
-        return tripulacion;
-    }
+
 
 }
