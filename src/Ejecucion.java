@@ -13,42 +13,54 @@ import tda.impl.GrafoDirigido;
 
 public class Ejecucion {
     public static ArrayList<Tripulacion> cargarTripulaciones() {
-        ArrayList<Tripulacion> tripulacionesA = new ArrayList<>();
+        ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
         try {
-            File tripulaciones = new File("/Users/martutoffoletto/Documents/GitHub/Vuelos_ProyectoPrograIII/src/Tripulaciones.csv");
-            Scanner trip = new Scanner(tripulaciones);
+            Scanner trip = new Scanner(new File("C:\\Users\\Fernando\\IdeaProjects\\Pruevas\\src\\Tripulaciones.csv"));
+            boolean a=true;
             while (trip.hasNextLine()) {
-                String data = trip.nextLine();
-                String[] datos = null;
-                datos = data.split(",");
-                Tripulacion tripulacion = new Tripulacion(datos[0], datos[1]);
-                tripulacionesA.add(tripulacion);
+                if(a){
+                    trip.nextLine();
+                }else {
+                    String data = trip.nextLine();
+                    String[] datos = null;
+                    datos = data.split(",");
+                    Tripulacion tripulacion = new Tripulacion(datos[0], datos[1]);
+                    tripulaciones.add(tripulacion);
+                }
+                a=false;
             }
             trip.close();
-        } catch (Exception e) {
-            System.out.println("Error inesperado.");
+        }catch (Exception e) {
+            System.out.println("Error inesperado 1.");
             e.printStackTrace();
         }
-        return tripulacionesA;
+        return tripulaciones;
     }
-    public static GrafoDirigidoTDA<Object>  cargarGrafo() {
+    /*public static GrafoDirigidoTDA<Object> cargarGrafo(List<Vuelo> vueloss) {
         GrafoDirigidoTDA<Object> mapa= new GrafoDirigido<Object>();
         mapa.inicializarGrafo();
         ConjuntoTDA<String> conjt= new Conjunto<String>();
         conjt.inicializarConjunto();
         try {
-            File aeropuertos = new File("/Users/martutoffoletto/Documents/GitHub/Vuelos_ProyectoPrograIII/src/Aeropuertos.csv");
+            File aeropuertos = new File("C:\\Users\\Fernando\\IdeaProjects\\Pruevas\\src\\Aeropuertos.csv");
             Scanner trip = new Scanner(aeropuertos);
+            boolean a=true;
             while (trip.hasNextLine()) {
-                String data = trip.nextLine();
-                String[] datos = null;
-                datos = data.split(",");
-                conjt.agregar(datos[0]);
-                conjt.agregar(datos[1]);
+                if(a) {
+                    trip.nextLine();
+                }else {
+                    String data = trip.nextLine();
+                    String[] datos = null;
+                    datos = data.split(",");
+                    conjt.agregar(datos[0]);
+                    conjt.agregar(datos[1]);
+                    System.out.println(data);
+                }
+                a=false;
             }
             trip.close();
         } catch (Exception e) {
-            System.out.println("Error inesperado.");
+            System.out.println("Error inesperado1.");
             e.printStackTrace();
         }
         while(!conjt.conjuntoVacio()){
@@ -57,38 +69,47 @@ public class Ejecucion {
             conjt.sacar(aero);
         }
         try {
-            File vuelos = new File("/Users/martutoffoletto/Documents/GitHub/Vuelos_ProyectoPrograIII/src/Vuelo.csv");
+            File vuelos = new File("C:\\Users\\Fernando\\IdeaProjects\\Pruevas\\src\\VV.csv");
             Scanner trip = new Scanner(vuelos);
+            boolean a=true;
             while (trip.hasNextLine()) {
-                String data = trip.nextLine();
-                String[] datos = null;
-                datos = data.split(",");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                String[] cod=datos[0].split(" ");
-                Vuelo vuel= new Vuelo(Integer.valueOf(cod[1]),datos[1],datos[2],LocalDateTime.parse(datos[3], formatter),LocalDateTime.parse(datos[4], formatter));
-                mapa.agregarArista(datos[1],datos[2],vuel);
+                if(a){
+                    trip.nextLine();
+                }else {
+                    String data = trip.nextLine();
+                    String[] datos = null;
+                    datos = data.split(",");
+                    System.out.println(data);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                    String[] cod = datos[0].split(" ");
+                    System.out.println(datos[3]);
+                    Vuelo vuel = new Vuelo(Integer.valueOf(cod[1]), datos[1], datos[2], LocalDateTime.parse(datos[3], formatter), LocalDateTime.parse(datos[4], formatter));
+                    vueloss.add(vuel);
+                    mapa.agregarArista(datos[1], datos[2], vuel);
+                }
+                a=false;
             }
             trip.close();
         } catch (Exception e) {
-            System.out.println("Error inesperado BRUH");
+            System.out.println("Error inesperado.");
             e.printStackTrace();
         }
         return mapa;
-    }
+    }*/
 
     public static void main(String[] args) {
         ArrayList<Tripulacion> tripulaciones= cargarTripulaciones();
         for(Tripulacion trip:tripulaciones){
             System.out.println(trip.getCodigo());
         }
-        GrafoDirigidoTDA mapa= cargarGrafo();
+        /*GrafoDirigidoTDA mapa= cargarGrafo();
         ConjuntoTDA c=mapa.vertices();
         while (!c.conjuntoVacio()){
             System.out.println(c.elegir(0));
             c.sacar(c.elegir(0));
         }
 
-        Main.AsignarPrimerVuelo(tripulaciones,mapa);
+        Main.AsignarPrimerVuelo(tripulaciones,mapa);*/
 
     }
 }
