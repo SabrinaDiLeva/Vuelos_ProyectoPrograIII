@@ -19,7 +19,7 @@ import java.util.List;
 public class Main {
 
 
-    public static void AsignarPrimerVuelo(ArrayList<Tripulacion> tripulaciones, GrafoDirigidoTDA mapa){ //los primeros vuelos son de los que va a salir cada tripulacicion
+    public static void AsignarPrimerVuelo(ArrayList<Tripulacion> tripulaciones, GrafoDirigidoTDA<Object> mapa){ //los primeros vuelos son de los que va a salir cada tripulacicion
         LocalDateTime horain=LocalDateTime.of(1999,12,12,12,12); //van a ser todos adyacentes
         ConjuntoTDA<Vuelo> conjunto= mapa.adyacentes(tripulaciones.get(0).getOrigen(),horain); //vuelos q salen de origen
         for (Tripulacion trip: tripulaciones) {
@@ -53,9 +53,10 @@ public class Main {
         System.out.println("SOLUCION");
         for(Camino camino : combValida){
             System.out.println("Camino: ");
-            for(Vuelo vuelo : camino.getCaminoDeVuelos()){
+            int elementos =camino.getCaminoDeVuelos().size();
+            /*for(Vuelo vuelo : vuelos){
                 System.out.println("Vuelo " +vuelo.getCodigo());
-            }
+            }*/
         }
     }
 
