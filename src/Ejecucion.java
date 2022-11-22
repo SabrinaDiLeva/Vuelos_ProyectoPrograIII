@@ -12,13 +12,7 @@ import tda.impl.Conjunto;
 import tda.impl.GrafoDirigido;
 
 public class Ejecucion {
-<<<<<<< HEAD
     /*public static ArrayList<Tripulacion> cargarTripulaciones() {
-=======
-    //Carga de archivos
-    // Archivo Tripulaciones
-    public static ArrayList<Tripulacion> cargarTripulaciones() {
->>>>>>> 0a94061e3c493f8710bd0bddc6d8daebb94bc8ec
         ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
         try {
             Scanner trip = new Scanner(new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Tripulaciones.csv"));
@@ -125,14 +119,14 @@ public class Ejecucion {
         Vuelo vuelo3 = new Vuelo(83, Jujuy,Aeroparque,LocalDateTime.of(2025,12,19,12,30), LocalDateTime.of(2025,12,19,12,30));
         Vuelo vuelo4 = new Vuelo(90, Calafate,Usuahia,LocalDateTime.of(2024,12,19,12,30), LocalDateTime.of(2024,12,19,12,30));
         Vuelo vuelo6 = new Vuelo(63, Usuahia,Aeroparque,LocalDateTime.of(2025,12,19,12,30), LocalDateTime.of(2025,12,19,12,30));
-        Vuelo vuelo7 = new Vuelo(56, Calafate,Aeroparque,LocalDateTime.of(2026,12,19,12,30), LocalDateTime.of(2026,12,19,12,30));
+        
         vuelos.add(vuelo1);
         vuelos.add(vuelo5);
         vuelos.add(vuelo2);
         vuelos.add(vuelo3);
         vuelos.add(vuelo4);
         vuelos.add(vuelo6);
-        vuelos.add(vuelo7);
+
 
         //Carga Tripulaciones
 
@@ -154,7 +148,6 @@ public class Ejecucion {
         mapa.agregarArista(Jujuy,Aeroparque,vuelo3);
         mapa.agregarArista(Calafate, Usuahia,vuelo4);
         mapa.agregarArista(Usuahia,Aeroparque,vuelo6);
-        mapa.agregarArista(Calafate,Aeroparque,vuelo7);
 
         //Carga con Archivos
         //ArrayList<Tripulacion> tripulaciones= cargarTripulaciones();
@@ -162,41 +155,8 @@ public class Ejecucion {
 
         int cantvuelos=0;
         Main.AsignarPrimerVuelo(tripulaciones,mapa,cantvuelos);
-        */
 
-        Tripulacion t1 = new Tripulacion("T1", "Aeroparque");
-        Tripulacion t2 = new Tripulacion("T2", "Aeroparque");
-        ArrayList<Tripulacion> tripulaciones= new ArrayList<>();
-        tripulaciones.add(t1);
-        tripulaciones.add(t2);
 
-        Object Aeroparque= new Object();
-        Object Mendoza= new Object();
-        Object Calafate= new Object();
-        Object Usuahia= new Object();
-        Object Jujuy= new Object();
-        GrafoDirigidoTDA mapa = new GrafoDirigido();
-        mapa.agregarVertice(Aeroparque);
-        mapa.agregarVertice(Mendoza);
-        mapa.agregarVertice(Calafate);
-        mapa.agregarVertice(Usuahia);
-        mapa.agregarVertice(Jujuy);
-
-        Vuelo v1 = new Vuelo(1001, Aeroparque, Mendoza, LocalDateTime.of(2022,11,22,12,00), LocalDateTime.of(2022,11,22,15,30));
-        Vuelo v2 = new Vuelo(1002, Mendoza, Calafate, LocalDateTime.of(2022,11,22,18,00), LocalDateTime.of(2022,11,22,19,30));
-        Vuelo v3 = new Vuelo(1002, Calafate, Aeroparque, LocalDateTime.of(2022,11,22,22,00), LocalDateTime.of(2022,11,22,23,30));
-        Vuelo v4 = new Vuelo(1002, Aeroparque, Jujuy, LocalDateTime.of(2022,11,22,10,00), LocalDateTime.of(2022,11,22,11,30));
-        Vuelo v5 = new Vuelo(1002, Jujuy, Mendoza, LocalDateTime.of(2022,11,22,14,00), LocalDateTime.of(2022,11,22,15,00));
-        Vuelo v6 = new Vuelo(1002, Mendoza, Aeroparque, LocalDateTime.of(2022,11,22,17,30), LocalDateTime.of(2022,11,22,20,00));
-        
-        mapa.agregarArista(Aeroparque, Mendoza, v1);
-        mapa.agregarArista(Mendoza, Calafate, v2);
-        mapa.agregarArista(Calafate, Aeroparque, v3);
-        mapa.agregarArista(Aeroparque, Jujuy, v4);
-        mapa.agregarArista(Jujuy, Mendoza, v5);
-        mapa.agregarArista(Mendoza, Aeroparque, v6);
-        
-        Main.AsignarPrimerVuelo(tripulaciones,mapa,6);
 
     }
 }
