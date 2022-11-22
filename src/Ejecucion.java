@@ -12,7 +12,13 @@ import tda.impl.Conjunto;
 import tda.impl.GrafoDirigido;
 
 public class Ejecucion {
+<<<<<<< HEAD
     /*public static ArrayList<Tripulacion> cargarTripulaciones() {
+=======
+    //Carga de archivos
+    // Archivo Tripulaciones
+    public static ArrayList<Tripulacion> cargarTripulaciones() {
+>>>>>>> 0a94061e3c493f8710bd0bddc6d8daebb94bc8ec
         ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
         try {
             Scanner trip = new Scanner(new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Tripulaciones.csv"));
@@ -36,14 +42,14 @@ public class Ejecucion {
         }
         return tripulaciones;
     }
-
+    // Archivo Vuelos y Aeropuertos
     public static  GrafoDirigidoTDA<Object> cargarGrafo(int cont) {
         GrafoDirigidoTDA<Object> mapa= new GrafoDirigido<Object>();
         mapa.inicializarGrafo();
         ConjuntoTDA<String> conjt= new Conjunto<String>();
         conjt.inicializarConjunto();
         try {
-            File aeropuertos = new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Aeropuertos.csv");
+            File aeropuertos = new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Aeropuertos.csv"); //Camino de Archivo
             Scanner trip = new Scanner(aeropuertos);
             boolean a=true;
             while (trip.hasNextLine()) {
@@ -55,7 +61,7 @@ public class Ejecucion {
                     datos = data.split(",");
                     conjt.agregar(datos[0]);
                     conjt.agregar(datos[1]);
-                    //System.out.println(data);
+                    System.out.println(datos[0]+" "+datos[1]);
                 }
                 a=false;
             }
@@ -70,7 +76,7 @@ public class Ejecucion {
             conjt.sacar(aero);
         }
         try {
-            File archivoVuelos = new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Vuelossss.csv");
+            File archivoVuelos = new File("C:\\Users\\Fernando\\IdeaProjects\\TPF\\Vuelos_ProyectoPrograIII\\src\\Vuelosss.csv"); //Camino de Archivo
             Scanner trip = new Scanner(archivoVuelos);
             boolean a=true;
 
@@ -82,14 +88,10 @@ public class Ejecucion {
                     String data = trip.nextLine();
                     String[] datos = null;
                     datos = data.split(",");
-                    //System.out.println(data);
                     String[]fecha1= datos[3].split("[ /:]");
-                   // System.out.println(fecha1[2]+" "+fecha1[1]+" "+fecha1[0]+" "+fecha1[3]+" "+fecha1[4]);
                     String[]fecha2=datos[4].split("[ /:]");
                     String[] cod = datos[0].split(" ");
-                   // System.out.println("xd"+cod[1]);
                     Vuelo vuel = new Vuelo(Integer.parseInt(cod[1]), datos[1], datos[2], LocalDateTime.of(Integer.parseInt(fecha1[2]),Integer.parseInt(fecha1[1]),Integer.parseInt(fecha1[0]),Integer.parseInt(fecha1[3]),Integer.parseInt(fecha1[4])), LocalDateTime.of(Integer.parseInt(fecha2[2]),Integer.parseInt(fecha2[1]),Integer.parseInt(fecha2[0]),Integer.parseInt(fecha2[3]),Integer.parseInt(fecha2[4])));
-                    //System.out.println("vuwlo   "+vuel.toString()+"  "+vuel.getCodigo()+""+vuel.getOrigen()+""+vuel.getDestino()+""+vuel.getFecha_despegue()+""+vuel.getFecha_aterrizaje());
                     mapa.agregarArista(datos[1],datos[2], vuel);
                 }
                 a=false;
@@ -103,10 +105,62 @@ public class Ejecucion {
     }*/
 
     public static void main(String[] args) {
-        /*ArrayList<Tripulacion> tripulaciones= cargarTripulaciones();
-        int cantvuelos=0;
-        GrafoDirigidoTDA<Object> mapa= cargarGrafo(cantvuelos);
+        //Carga de listas de Archivos y Vuelos
+        ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
+        List<Vuelo> vuelos = new ArrayList<>();
 
+        //Carga Aeropuertos
+
+        Object Aeroparque=new Object();
+        Object Mendoza=new Object();
+        Object  Jujuy=new Object();
+        Object Calafate=new Object();
+        Object Usuahia=new Object();
+
+        //Carga Vuelos
+
+        Vuelo vuelo1 = new Vuelo(21, Aeroparque,Mendoza, LocalDateTime.of(2023,12,19,12,30), LocalDateTime.of(2023,12,19,12,30));
+        Vuelo vuelo5 = new Vuelo(45, Aeroparque,Calafate,LocalDateTime.of(2023,12,19,12,30), LocalDateTime.of(2023,12,19,12,30));
+        Vuelo vuelo2 = new Vuelo(26, Mendoza,Jujuy,LocalDateTime.of(2024,12,19,12,30), LocalDateTime.of(2024,12,19,12,30));
+        Vuelo vuelo3 = new Vuelo(83, Jujuy,Aeroparque,LocalDateTime.of(2025,12,19,12,30), LocalDateTime.of(2025,12,19,12,30));
+        Vuelo vuelo4 = new Vuelo(90, Calafate,Usuahia,LocalDateTime.of(2024,12,19,12,30), LocalDateTime.of(2024,12,19,12,30));
+        Vuelo vuelo6 = new Vuelo(63, Usuahia,Aeroparque,LocalDateTime.of(2025,12,19,12,30), LocalDateTime.of(2025,12,19,12,30));
+        Vuelo vuelo7 = new Vuelo(56, Calafate,Aeroparque,LocalDateTime.of(2026,12,19,12,30), LocalDateTime.of(2026,12,19,12,30));
+        vuelos.add(vuelo1);
+        vuelos.add(vuelo5);
+        vuelos.add(vuelo2);
+        vuelos.add(vuelo3);
+        vuelos.add(vuelo4);
+        vuelos.add(vuelo6);
+        vuelos.add(vuelo7);
+
+        //Carga Tripulaciones
+
+        Tripulacion tripulacion1= new Tripulacion("T1",Aeroparque);
+        Tripulacion tripulacion2= new Tripulacion("T2",Aeroparque);
+        tripulaciones.add(tripulacion1);
+        tripulaciones.add(tripulacion2);
+        //Inicializamos mapa de Aeropuertos
+        GrafoDirigidoTDA mapa=new GrafoDirigido();
+        mapa.inicializarGrafo();
+        mapa.agregarVertice(Aeroparque);
+        mapa.agregarVertice(Mendoza);
+        mapa.agregarVertice(Jujuy);
+        mapa.agregarVertice(Calafate);
+        mapa.agregarVertice(Usuahia);
+        mapa.agregarArista(Aeroparque,Mendoza,vuelo1);
+        mapa.agregarArista(Aeroparque,Calafate,vuelo5);
+        mapa.agregarArista(Mendoza,Jujuy,vuelo2);
+        mapa.agregarArista(Jujuy,Aeroparque,vuelo3);
+        mapa.agregarArista(Calafate, Usuahia,vuelo4);
+        mapa.agregarArista(Usuahia,Aeroparque,vuelo6);
+        mapa.agregarArista(Calafate,Aeroparque,vuelo7);
+
+        //Carga con Archivos
+        //ArrayList<Tripulacion> tripulaciones= cargarTripulaciones();
+//      GrafoDirigidoTDA mapa= cargarGrafo(cantvuelos);
+
+        int cantvuelos=0;
         Main.AsignarPrimerVuelo(tripulaciones,mapa,cantvuelos);
         */
 
