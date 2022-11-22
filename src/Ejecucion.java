@@ -15,7 +15,7 @@ public class Ejecucion {
     public static ArrayList<Tripulacion> cargarTripulaciones() {
         ArrayList<Tripulacion> tripulaciones = new ArrayList<>();
         try {
-            Scanner trip = new Scanner(new File("C:\\Users\\Fernando\\IdeaProjects\\Pruevas\\src\\Tripulaciones.csv"));
+            Scanner trip = new Scanner(new File("C:\\Users\\User\\Downloads\\Tripulaciones.csv"));
             boolean a=true;
             while (trip.hasNextLine()) {
                 if(a){
@@ -36,13 +36,13 @@ public class Ejecucion {
         }
         return tripulaciones;
     }
-    /*public static GrafoDirigidoTDA<Object> cargarGrafo(List<Vuelo> vueloss) {
+    public static GrafoDirigidoTDA<Object> cargarGrafo(List<Vuelo> listaVuelos) {
         GrafoDirigidoTDA<Object> mapa= new GrafoDirigido<Object>();
         mapa.inicializarGrafo();
         ConjuntoTDA<String> conjt= new Conjunto<String>();
         conjt.inicializarConjunto();
         try {
-            File aeropuertos = new File("C:\\Users\\Fernando\\IdeaProjects\\Pruevas\\src\\Aeropuertos.csv");
+            File aeropuertos = new File("C:\\Users\\User\\Downloads\\Aeropuertos.csv");
             Scanner trip = new Scanner(aeropuertos);
             boolean a=true;
             while (trip.hasNextLine()) {
@@ -69,8 +69,8 @@ public class Ejecucion {
             conjt.sacar(aero);
         }
         try {
-            File vuelos = new File("C:\\Users\\Fernando\\IdeaProjects\\Pruevas\\src\\VV.csv");
-            Scanner trip = new Scanner(vuelos);
+            File archivoVuelos = new File("C:\\Users\\User\\Downloads\\Vuelos.csv");
+            Scanner trip = new Scanner(archivoVuelos);
             boolean a=true;
             while (trip.hasNextLine()) {
                 if(a){
@@ -84,7 +84,7 @@ public class Ejecucion {
                     String[] cod = datos[0].split(" ");
                     System.out.println(datos[3]);
                     Vuelo vuel = new Vuelo(Integer.valueOf(cod[1]), datos[1], datos[2], LocalDateTime.parse(datos[3], formatter), LocalDateTime.parse(datos[4], formatter));
-                    vueloss.add(vuel);
+                    listaVuelos.add(vuel);
                     mapa.agregarArista(datos[1], datos[2], vuel);
                 }
                 a=false;
@@ -95,21 +95,25 @@ public class Ejecucion {
             e.printStackTrace();
         }
         return mapa;
-    }*/
+    }
 
     public static void main(String[] args) {
         ArrayList<Tripulacion> tripulaciones= cargarTripulaciones();
         for(Tripulacion trip:tripulaciones){
             System.out.println(trip.getCodigo());
         }
-        /*GrafoDirigidoTDA mapa= cargarGrafo();
+        List<Vuelo> listaVuelos = new ArrayList<>();
+        GrafoDirigidoTDA mapa= cargarGrafo(listaVuelos);
+        
         ConjuntoTDA c=mapa.vertices();
         while (!c.conjuntoVacio()){
-            System.out.println(c.elegir(0));
-            c.sacar(c.elegir(0));
+            Object elemento= c.elegir(0);
+            System.out.println("vertice "+elemento);
+            c.sacar(elemento);
         }
 
-        Main.AsignarPrimerVuelo(tripulaciones,mapa);*/
+
+        Main.AsignarPrimerVuelo(tripulaciones,mapa);
 
     }
 }

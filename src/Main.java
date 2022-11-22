@@ -141,12 +141,12 @@ public class Main {
 
     public static int costoEntreDosVuelos(Vuelo vuelo1, Vuelo vuelo2){
         int costo=0;
-        System.out.println(vuelo1.getCodigo()+" "+vuelo2.getCodigo());
+        //System.out.println(vuelo1.getCodigo()+" "+vuelo2.getCodigo());
         long horas = ChronoUnit.HOURS.between(vuelo2.getFecha_aterrizaje(),vuelo1.getFecha_despegue());
         if(horas>2){
-            System.out.println("horas entre vuelos: "+horas);
+            //System.out.println("horas entre vuelos: "+horas);
             costo=(int) ((horas-2)*100);
-            System.out.println("costo entre vuelos: "+costo);
+            //System.out.println("costo entre vuelos: "+costo);
         }
 
         return costo;
