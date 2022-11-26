@@ -31,24 +31,24 @@ public class Main {
             solucionP[0]=vueloasignar;
             ConjuntoTDA<Vuelo> c=mapa.adyacentes(vueloasignar.getDestino(),hora);
             CaminosPosibles(trip,mapa,1,c,solucionP, 0,0,0,cantvuelos);
-            ArrayList<Camino> caminos= trip.getCaminos();
-            for (int i=0;i<caminos.size();i++){
-//                System.out.println("CAMINO:"+caminos.get(i).getCosto() );
+            //ArrayList<Camino> caminos= trip.getCaminos();
+            /* for (int i=0;i<caminos.size();i++){
+                System.out.println("CAMINO:"+caminos.get(i).getCosto() );
 
                 ArrayList<Vuelo> camino=caminos.get(i).getCaminoDeVuelos();
-//                for (int d=0;d<camino.size();d++){
-//                    System.out.println("Codigo de vuelo: "+ camino.get(d).getCodigo());
-//                }
+                for (int d=0;d<camino.size();d++){
+                    System.out.println("Codigo de vuelo: "+ camino.get(d).getCodigo());
+                }
             }
+            */
 
         }
-        System.out.println();
         System.out.println("SOLUCION");
         Camino combValida[] = new Camino[tripulaciones.size()];
         CombinarCaminosTripulacion(tripulaciones, 0, combValida,0,0);
         int cont=0;
         for(Camino camino : combValida){
-            System.out.println("Camino Tripilacion "+ tripulaciones.get(cont).getCodigo() +": ");
+            System.out.println("Camino Tripulacion "+ tripulaciones.get(cont).getCodigo() +": ");
             cont++;
             for(Vuelo vuelo : camino.getCaminoDeVuelos()){
                 System.out.println("Vuelo " +vuelo.getCodigo());
@@ -108,13 +108,14 @@ public class Main {
                     solucion = CombinarCaminosTripulacion(tripulaciones, etapa+1, combValida,costo, costoParcial);
                 }
             }
+            j++;
         }
         return solucion;
 
     }
 
     public static boolean combinacionValida(Camino comb[],int etapa,int costo, int costoParcial){
-        if(costoParcial<costo){
+        if(costoParcial<costo || costo==0){
             ConjuntoTDA<Vuelo> vuelosUsados = new Conjunto<Vuelo>();
             vuelosUsados.inicializarConjunto();
             for(int i=0; i<etapa; i++){
@@ -142,6 +143,7 @@ public class Main {
 
         return costo;
     }
+
 
 
 
