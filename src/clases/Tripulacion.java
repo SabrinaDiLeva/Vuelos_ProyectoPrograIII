@@ -11,6 +11,11 @@ public class Tripulacion {
         return caminos;
     }
 
+
+    public void setCaminos(ArrayList<Camino> caminos) {
+        this.caminos = caminos;
+    }
+
     private ArrayList<Camino> caminos;
 
 
