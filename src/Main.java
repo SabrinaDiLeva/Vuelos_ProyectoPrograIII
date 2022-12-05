@@ -41,19 +41,24 @@ public class Main {
         */
         System.out.println("SOLUCION");
         Camino combValida[] = new Camino[tripulaciones.size()];
-        CombinarCaminosTripulacion(tripulaciones, 0, combValida,0,0,cantvuelos,cont);
+        boolean HaySol=CombinarCaminosTripulacion(tripulaciones, 0, combValida,0,0,cantvuelos,cont);
         int conta=0;
         int total=0;
-        for(Camino camino : combValida){
-            total+=camino.getCosto();
-            System.out.println("Camino Tripulacion "+ tripulaciones.get(conta).getCodigo() +": ");
-            conta++;
-            for(Vuelo vuelo : camino.getCaminoDeVuelos()){
-                System.out.println("Vuelo " +vuelo.getCodigo());
+        if (HaySol){
+            for(Camino camino : combValida){
+                total+=camino.getCosto();
+                System.out.println("Camino Tripulacion "+ tripulaciones.get(conta).getCodigo() +": ");
+                conta++;
+                for(Vuelo vuelo : camino.getCaminoDeVuelos()){
+                    System.out.println("Vuelo " +vuelo.getCodigo());
+                }
             }
+            System.out.println();
+            System.out.println("Costo Total "+total);
+        }else {
+            System.out.println("No hay Solucion");
         }
-        System.out.println();
-        System.out.println("Costo Total "+total);
+
     }
 
     public static void CaminosPosibles(ArrayList<Camino> caminos,Object origen, GrafoDirigidoTDA mapa, int etapa,ConjuntoTDA<Vuelo> ady,Vuelo solucion[],int j,int costo,int ultimaEtapa, int cantvuelos){
