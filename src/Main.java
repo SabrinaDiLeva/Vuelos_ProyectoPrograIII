@@ -28,14 +28,20 @@ public class Main {
         Vuelo solucionP[]= new Vuelo[1000];
         CaminosPosibles(caminos, origen,mapa ,0,conjunto,solucionP, 0,0,0,cantvuelos);
         while (cont<tripulaciones.size() && !conjunto.conjuntoVacio()){ //puede pasar q hay menos tripulaciones q vuelos en el origen o alrevez
-            System.out.println("TRIPULACION: "+tripulaciones.get(cont).getCodigo());
             tripulaciones.get(cont).setCaminos(caminos);
             conjunto.sacar(conjunto.elegir(0));
             cont++;
         }
+       /* for (Camino cam: caminos){
+            System.out.println("camino "+ cam.getCosto());
+            for (Vuelo vuelo: cam.getCaminoDeVuelos()){
+                System.out.println(vuelo.getCodigo());
+            }
+        }
+        */
         System.out.println("SOLUCION");
         Camino combValida[] = new Camino[tripulaciones.size()];
-        CombinarCaminosTripulacion(tripulaciones, 0, combValida,0,0,cont);
+        CombinarCaminosTripulacion(tripulaciones, 0, combValida,0,0,cantvuelos,cont);
         int conta=0;
         int total=0;
         for(Camino camino : combValida){
@@ -91,18 +97,26 @@ public class Main {
         }
     }
 
-    public static boolean CombinarCaminosTripulacion(ArrayList<Tripulacion> tripulaciones,int etapa,Camino combValida[],int costo, int costoParcial,int vuelosOrigwn){
+    public static boolean CombinarCaminosTripulacion(ArrayList<Tripulacion> tripulaciones,int etapa,Camino combValida[],int costo, int costoParcial,int cantVuelos,int largoSol){
         boolean solucion = false;
         int j=0;
         while(!solucion && j<tripulaciones.get(etapa).getCaminos().size()){
             combValida[etapa]= tripulaciones.get(etapa).getCaminos().get(j);
             costoParcial+=tripulaciones.get(etapa).getCaminos().get(j).getCosto();
             if(combinacionValida(combValida,etapa,costo,costoParcial)){
-                if (etapa==tripulaciones.size()-1 ||etapa==vuelosOrigwn){
-                    solucion=true;
-                    costo=costoParcial;
+                int cont=0;
+                for (int i=0; i<=etapa;i++){
+                    cont+=combValida[i].getCaminoDeVuelos().size();
+                }
+
+                if (etapa==largoSol-1){
+                    if ( cont==cantVuelos){
+                        solucion=true;
+                        costo=costoParcial;
+                    }
+
                 }else{
-                    solucion = CombinarCaminosTripulacion(tripulaciones, etapa+1, combValida,costo, costoParcial,vuelosOrigwn);
+                    solucion = CombinarCaminosTripulacion(tripulaciones, etapa+1, combValida,costo, costoParcial,cantVuelos,largoSol);
                 }
             }
             j++;
@@ -135,7 +149,7 @@ public class Main {
         int costo=0;
         long horas = ChronoUnit.HOURS.between(vuelo2.getFecha_aterrizaje(),vuelo1.getFecha_despegue());
         if(horas>2){
-            costo=(int) ((horas-2)*100);
+            costo=(int) ((horas-2)*60);
         }
 
         return costo;
