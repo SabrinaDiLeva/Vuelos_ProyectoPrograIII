@@ -27,7 +27,8 @@ public class Main {
         ConjuntoTDA<Vuelo> conjunto= mapa.adyacentes(origen,horain); //vuelos q salen de origen
         Vuelo solucionP[]= new Vuelo[1000];
         CaminosPosibles(caminos, origen,mapa ,0,conjunto,solucionP, 0,0,cantvuelos);
-        /*for (Camino cam: caminos){
+        /*
+        for (Camino cam: caminos){
             System.out.println("camino "+ cam.getCosto());
             System.out.println(cam);
             for (Vuelo vuelo: cam.getCaminoDeVuelos()){
@@ -36,6 +37,8 @@ public class Main {
        }
 
          */
+
+
 
 
         tripulaciones.get(0).setCaminos(caminos);
@@ -76,7 +79,7 @@ public class Main {
                 else {
                     solucion[etapa]=null;
                 }
-                if (etapa==cantvuelos-1 ||ady.conjuntoVacio()) {
+                if (etapa==cantvuelos-1 ||ady.conjuntoVacio() || (i==1 && vueloaux.getDestino().equals(origen) )) {;
                     if (solucion[ultimaEtapa].getDestino().equals(origen)){
                         Camino cam = new Camino();
                         int d=0;
