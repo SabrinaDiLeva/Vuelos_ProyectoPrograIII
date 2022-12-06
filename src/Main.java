@@ -26,8 +26,8 @@ public class Main {
         Object origen=tripulaciones.get(0).getOrigen();
         ConjuntoTDA<Vuelo> conjunto= mapa.adyacentes(origen,horain); //vuelos q salen de origen
         Vuelo solucionP[]= new Vuelo[1000];
-        CaminosPosibles(caminos, origen,mapa ,0,conjunto,solucionP, 0,0,0,cantvuelos);
-       /*for (Camino cam: caminos){
+        CaminosPosibles(caminos, origen,mapa ,0,conjunto,solucionP, 0,0,cantvuelos);
+        /*for (Camino cam: caminos){
             System.out.println("camino "+ cam.getCosto());
             System.out.println(cam);
             for (Vuelo vuelo: cam.getCaminoDeVuelos()){
@@ -35,7 +35,9 @@ public class Main {
             }
        }
 
-        */
+         */
+
+
         tripulaciones.get(0).setCaminos(caminos);
         System.out.println("SOLUCION");
         Camino combValida[] = new Camino[tripulaciones.size()];
@@ -45,7 +47,7 @@ public class Main {
         int total=0;
         if (HaySol){
             for (int i=0;i<= trip.x;i++){
-                total+=combValida[i].getCosto();
+                total=total+combValida[i].getCosto();
                 System.out.println("Camino Tripulacion "+ tripulaciones.get(conta).getCodigo() +": ");
                 conta++;
                 for(Vuelo vuelo : combValida[i].getCaminoDeVuelos()){
@@ -60,15 +62,12 @@ public class Main {
 
     }
 
-    public static void CaminosPosibles(ArrayList<Camino> caminos,Object origen, GrafoDirigidoTDA mapa, int etapa,ConjuntoTDA<Vuelo> ady,Vuelo solucion[],int j,int costo,int ultimaEtapa, int cantvuelos){
+    public static void CaminosPosibles(ArrayList<Camino> caminos,Object origen, GrafoDirigidoTDA mapa, int etapa,ConjuntoTDA<Vuelo> ady,Vuelo solucion[],int j,int ultimaEtapa, int cantvuelos){
         if(j< ady.capacidad()){
             Vuelo vueloaux= ady.elegir(j);
             for (int i = 0; i <= 1; i++) {
                 if (i == 1) { //representa el si, cambia a los adyacentes del prox nodo
                     solucion[etapa]=vueloaux;
-                    if (ultimaEtapa!=0){
-                        costo+=costoEntreDosVuelos(solucion[etapa], solucion[ultimaEtapa]);
-                    }
                     ultimaEtapa =etapa;
                     ConjuntoTDA adyacentes = mapa.adyacentes(vueloaux.getDestino(), vueloaux.getFecha_aterrizaje());
                     ady = adyacentes;
@@ -77,25 +76,31 @@ public class Main {
                 else {
                     solucion[etapa]=null;
                 }
-                if (etapa+1==cantvuelos ||ady.conjuntoVacio()) {
+                if (etapa==cantvuelos-1 ||ady.conjuntoVacio()) {
                     if (solucion[ultimaEtapa].getDestino().equals(origen)){
                         Camino cam = new Camino();
                         int d=0;
+                        int costo=0;
+                        Vuelo c=null;
                         while (d<solucion.length&& d<=etapa){
                             Vuelo x = solucion[d];
                             if (x!=null) {
                                 cam.Agregar(x);
+                                if (c!=null){
+                                    costo+=costoEntreDosVuelos(x, c);
+                                }
+                                c=x;
+
                             }
                             d++;
                         }
 
                         caminos.add(cam);
                         cam.setCosto(costo);
-                        costo=0;
 
                     }
                 } else {
-                    CaminosPosibles(caminos,origen, mapa, etapa + 1, ady, solucion,j+1,costo,ultimaEtapa,cantvuelos);
+                    CaminosPosibles(caminos,origen, mapa, etapa + 1, ady, solucion,j+1,ultimaEtapa,cantvuelos);
                 }
             }
         }
@@ -125,6 +130,7 @@ public class Main {
 
 
             }
+            costoParcial-=tripulaciones.get(0).getCaminos().get(j).getCosto();
             j++;
         }
         return solucion;
