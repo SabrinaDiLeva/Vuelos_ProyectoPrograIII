@@ -18,6 +18,8 @@ import java.util.List;
 
 public class Main {
     static int x;
+    Camino Solucion[];
+
 
     public static void AsignarPrimerVuelo(ArrayList<Tripulacion> tripulaciones, GrafoDirigidoTDA mapa,int cantvuelos){ //los primeros vuelos son de los que va a salir cada tripulacicion
         LocalDateTime horain=LocalDateTime.of(1999,12,12,12,12); //van a ser todos adyacentes
@@ -27,10 +29,10 @@ public class Main {
         ConjuntoTDA<Vuelo> conjunto= mapa.adyacentes(origen,horain); //vuelos q salen de origen
         Vuelo solucionP[]= new Vuelo[1000];
         CaminosPosibles(caminos, origen,mapa ,0,conjunto,solucionP, 0,0,cantvuelos);
+
         /*
         for (Camino cam: caminos){
             System.out.println("camino "+ cam.getCosto());
-            System.out.println(cam);
             for (Vuelo vuelo: cam.getCaminoDeVuelos()){
                 System.out.println(vuelo.getCodigo());
             }
@@ -38,30 +40,29 @@ public class Main {
 
          */
 
-
-
-
         tripulaciones.get(0).setCaminos(caminos);
         System.out.println("SOLUCION");
         Camino combValida[] = new Camino[tripulaciones.size()];
+        Main sol= new Main();
+        sol.Solucion=new Camino[tripulaciones.size()];
         Main trip=new Main();
-        boolean HaySol=CombinarCaminosTripulacion(tripulaciones, 0, combValida,0,0,cantvuelos,trip);
+        Main con=new Main();
+        CombinarCaminosTripulacion(tripulaciones, 0, combValida,con,0,cantvuelos,trip,sol);
         int conta=0;
         int total=0;
-        if (HaySol){
-            for (int i=0;i<= trip.x;i++){
-                total=total+combValida[i].getCosto();
+        for (int i=0;i<= trip.x;i++){
+                total+=sol.Solucion[i].getCosto();
                 System.out.println("Camino Tripulacion "+ tripulaciones.get(conta).getCodigo() +": ");
                 conta++;
-                for(Vuelo vuelo : combValida[i].getCaminoDeVuelos()){
+                for(Vuelo vuelo : sol.Solucion[i].getCaminoDeVuelos()){
                     System.out.println("Vuelo " +vuelo.getCodigo());
                 }
-            }
-            System.out.println();
-            System.out.println("Costo Total "+total);
-        }else {
-            System.out.println("No hay Solucion");
         }
+        System.out.println();
+        System.out.println("Costo Total "+total);
+
+
+
 
     }
 
@@ -79,7 +80,8 @@ public class Main {
                 else {
                     solucion[etapa]=null;
                 }
-                if (etapa==cantvuelos-1 ||ady.conjuntoVacio() || (i==1 && vueloaux.getDestino().equals(origen) )) {;
+
+                if (etapa==cantvuelos-1 ||ady.conjuntoVacio() || (i==1 && solucion[ultimaEtapa].getDestino().equals(origen))) {;
                     if (solucion[ultimaEtapa].getDestino().equals(origen)){
                         Camino cam = new Camino();
                         int d=0;
@@ -102,6 +104,9 @@ public class Main {
                         cam.setCosto(costo);
 
                     }
+                    if (etapa!=cantvuelos-1){
+                        CaminosPosibles(caminos,origen, mapa, etapa + 1, ady, solucion,j+1,ultimaEtapa,cantvuelos);
+                    }
                 } else {
                     CaminosPosibles(caminos,origen, mapa, etapa + 1, ady, solucion,j+1,ultimaEtapa,cantvuelos);
                 }
@@ -109,39 +114,43 @@ public class Main {
         }
     }
 
-    public static boolean CombinarCaminosTripulacion(ArrayList<Tripulacion> tripulaciones,int etapa,Camino combValida[],int costo, int costoParcial,int cantVuelos,Main trip){
-        boolean solucion = false;
-        int j=0;
-        while(!solucion && j<tripulaciones.get(0).getCaminos().size()){
-            combValida[etapa]= tripulaciones.get(0).getCaminos().get(j);
-            costoParcial+=tripulaciones.get(0).getCaminos().get(j).getCosto();
-            if(combinacionValida(combValida,etapa,costo,costoParcial)){
-                int cont=0;
-                for (int i=0; i<=etapa;i++){
-                    cont+=combValida[i].getCaminoDeVuelos().size();
+    public static void CombinarCaminosTripulacion(ArrayList<Tripulacion> tripulaciones,int etapa,Camino combValida[],Main costo, int costoParcial,int cantVuelos,Main trip,Main Solucion ) {
+        int j = 0;
+        while (j < tripulaciones.get(0).getCaminos().size()) {
+            combValida[etapa] = tripulaciones.get(0).getCaminos().get(j);
+            if (combinacionValida(combValida, etapa)) {
+                int cont = 0;
+                costoParcial = 0;
+                for (int i = 0; i <= etapa; i++) {
+                    cont += combValida[i].getCaminoDeVuelos().size();
+                    costoParcial += combValida[i].getCosto();
                 }
-                if ( cont==cantVuelos){ //si se cubren cant vuelos
-                    solucion=true;
-                    costo=costoParcial;
-                    trip.x=etapa;
-                }else {
-                    if (etapa<tripulaciones.size()-1){ //combinacion de vuelos igual o menos q cantidad de tripulaciones
-                        solucion = CombinarCaminosTripulacion(tripulaciones, etapa+1, combValida,costo, costoParcial,cantVuelos,trip);
+
+                if (cont == cantVuelos) { //si se cubren cant vuelos
+                    if (costo.x==0 || costoParcial<costo.x ){
+                        costo.x = costoParcial;
+                        trip.x = etapa;
+                        Solucion.Solucion = combValida.clone();
+                    }
+
+
+                } else {
+                    if (etapa < tripulaciones.size() - 1) { //combinacion de vuelos igual o menos q cantidad de tripulaciones
+                        CombinarCaminosTripulacion(tripulaciones, etapa + 1, combValida, costo, costoParcial, cantVuelos, trip,Solucion);
                     }
                 }
 
 
-
             }
-            costoParcial-=tripulaciones.get(0).getCaminos().get(j).getCosto();
+            costoParcial -= tripulaciones.get(0).getCaminos().get(j).getCosto();
             j++;
         }
-        return solucion;
+
 
     }
 
-    public static boolean combinacionValida(Camino comb[],int etapa,int costo, int costoParcial){
-        if(costoParcial<costo || costo==0){
+    public static boolean combinacionValida(Camino comb[],int etapa){
+
             ConjuntoTDA<Vuelo> vuelosUsados = new Conjunto<Vuelo>();
             vuelosUsados.inicializarConjunto();
             for(int i=0; i<=etapa; i++){
@@ -153,9 +162,7 @@ public class Main {
                     }
                 }
             }
-        }else{
-            return false;
-        }
+
 
         return true;
     }
